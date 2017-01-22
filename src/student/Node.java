@@ -9,7 +9,6 @@ import java.util.List;
 public class Node {
 
     private Long id;
-    private int hashCode;
     private int distanceToTarget;
     private List<Node> destinations;
     private boolean explored;
@@ -21,23 +20,13 @@ public class Node {
         deadEnd = false;
     }
 
-    public Node(long id, int hashCode, int distanceToTarget){
+    public Node(Long id, int distanceToTarget){
         setId(id);
-        setHashCode(hashCode);
         setDistanceToTarget(distanceToTarget);
     }
 
     public void addDestination(Node node){
         destinations.add(node);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.hashCode;
-    }
-
-    private void setHashCode(int hashCode) {
-        this.hashCode = hashCode;
     }
 
     public int getDistanceToTarget() {

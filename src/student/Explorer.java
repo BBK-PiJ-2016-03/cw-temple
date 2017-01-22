@@ -40,7 +40,17 @@ public class Explorer {
    */
   public void explore(ExplorationState state) {
     System.out.println("Starting...");
+    NodeGraph graph = new NodeGraph();
 
+    while(state.getDistanceToTarget() > 0){
+      graph.addCurrentNode(getNodeFromState(state), state.getNeighbours());
+      state.moveTo(graph.getNextMove());
+    }
+
+  }
+
+  private Node getNodeFromState(ExplorationState state) {
+    return new Node(state.getCurrentLocation(), state.getDistanceToTarget());
   }
 
   /**
