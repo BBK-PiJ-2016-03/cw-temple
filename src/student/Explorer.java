@@ -2,9 +2,6 @@ package student;
 
 import game.EscapeState;
 import game.ExplorationState;
-import game.NodeStatus;
-
-import java.util.Collection;
 
 public class Explorer {
 
@@ -40,17 +37,18 @@ public class Explorer {
    */
   public void explore(ExplorationState state) {
     System.out.println("Starting...");
-    NodeGraph graph = new NodeGraph();
+    CavernMap map = new CavernMap();
+    Navigator control = new Navigator(map);
 
     while(state.getDistanceToTarget() > 0){
-      graph.addCurrentNode(getNodeFromState(state), state.getNeighbours());
-      state.moveTo(graph.getNextMove());
+      map.addCurrentNode(getNodeFromState(state), state.getNeighbours());
+      state.moveTo(control.getNextMove());
     }
 
   }
 
-  private Node getNodeFromState(ExplorationState state) {
-    return new Node(state.getCurrentLocation(), state.getDistanceToTarget());
+  private CavernSquare getNodeFromState(ExplorationState state) {
+    return new CavernSquare(state.getCurrentLocation(), state.getDistanceToTarget());
   }
 
   /**

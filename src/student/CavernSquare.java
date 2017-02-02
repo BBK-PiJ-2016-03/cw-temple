@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * Created by Alexander Worton on 22/01/2017.
  */
-public class Node {
+public class CavernSquare {
 
     private Long id;
     private int distanceToTarget;
-    private List<Node> destinations;
+    private List<CavernSquare> destinations;
     private boolean explored;
     private boolean deadEnd;
 
@@ -20,13 +20,18 @@ public class Node {
         deadEnd = false;
     }
 
-    public Node(Long id, int distanceToTarget){
+    public CavernSquare(Long id, int distanceToTarget){
         setId(id);
         setDistanceToTarget(distanceToTarget);
     }
 
-    public void addDestination(Node node){
-        destinations.add(node);
+    /**
+     *
+     * @param cavernSquare the supplied cavernSquare
+     * @throws IllegalArgumentException if attempting to add to a destination to a square already holding
+     */
+    public void addDestination(CavernSquare cavernSquare){
+        destinations.add(cavernSquare);
     }
 
     public int getDistanceToTarget() {
@@ -37,7 +42,7 @@ public class Node {
         this.distanceToTarget = distanceToTarget;
     }
 
-    public List<Node> getDestinations() {
+    public List<CavernSquare> getDestinations() {
         return destinations;
     }
 
