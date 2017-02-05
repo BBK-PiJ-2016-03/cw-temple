@@ -27,10 +27,23 @@ public class DijkstraNavigator implements Navigator {
 
     @Override
     public Queue<CavernNode> getPathFromStartToDestination() {
+        if(getStartNode() == null || getDestinationNode() == null)
+            throw new IllegalStateException("Start and destination nodes must be set before generating path");
+
+        setAllNodesValueToMax();
+
         return null;
     }
 
     private void setMap(CavernMap map) {
         this.map = map;
+    }
+
+    private CavernNode getStartNode() {
+        return startNode;
+    }
+
+    private CavernNode getDestinationNode() {
+        return destinationNode;
     }
 }

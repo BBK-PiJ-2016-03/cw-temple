@@ -28,4 +28,11 @@ public interface CavernMap {
      */
     List<CavernNode> getConnectedNodes(CavernNode node) throws IllegalArgumentException;
 
+    /**
+     * Getter for all nodes
+     * @return a list of all nodes in the map
+     */
+    List<CavernNode> getAllNodes();
+
+
 }
