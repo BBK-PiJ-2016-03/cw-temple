@@ -33,17 +33,21 @@ public class CavernNodeImpl implements CavernNode {
     @Override
     public void setPathValue(int pathValue) {
         if(pathValue < 0)
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Path values must be valid to be set");
         this.pathValue = pathValue;
     }
 
     @Override
     public long getId() {
-        return 0;
+        if(this.id < 1)
+            throw new IllegalStateException("Id has not yet been set for this node");
+        return this.id;
     }
 
     @Override
-    public void setId(long pathValue) {
-
+    public void setId(long id) {
+        if(id < 1)
+            throw new IllegalArgumentException("Provided Id is invalid. Please supply a positive id greater than zero");
+        this.id = id;
     }
 }
