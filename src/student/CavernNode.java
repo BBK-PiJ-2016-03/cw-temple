@@ -11,6 +11,12 @@ public interface CavernNode {
     boolean isGoldenValue();
 
     /**
+     * Setter for the node Golden value flag
+     * @param value true or false
+     */
+    void setGoldenValue(boolean value);
+
+    /**
      * Getter for the node path value
      * @return path value
      */

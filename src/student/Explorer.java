@@ -37,18 +37,18 @@ public class Explorer {
    */
   public void explore(ExplorationState state) {
     System.out.println("Starting...");
-    CavernMapImpl map = new CavernMapImpl();
-    Navigator control = new Navigator(map);
+//    CavernMap map = new CavernMapImpl();
+//    Navigator control = new Navigator(map);
 
     while(state.getDistanceToTarget() > 0){
-      map.addCurrentNode(getNodeFromState(state), state.getNeighbours());
-      state.moveTo(control.getNextMove());
+//      map.addCurrentNode(getNodeFromState(state), state.getNeighbours());
+//      state.moveTo(control.getNextMove());
     }
   }
 
-  private CavernNodeImpl getNodeFromState(ExplorationState state) {
-    return new CavernNodeImpl(state.getCurrentLocation(), state.getDistanceToTarget());
-  }
+//  private CavernNodeImpl getNodeFromState(ExplorationState state) {
+//    return new CavernNodeImpl(state.getCurrentLocation(), state.getDistanceToTarget());
+//  }
 
   /**
    * Escape from the cavern before the ceiling collapses, trying to collect as much
