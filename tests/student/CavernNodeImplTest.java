@@ -60,13 +60,44 @@ public class CavernNodeImplTest {
     }
 
     @Test
-    public void getId() throws Exception {
-
+    public void getDefaultId(){
+        long expectedDefault = 0L;
+        assertEquals(expectedDefault, node.getId());
     }
 
     @Test
-    public void setId() throws Exception {
+    public void setId(){
+        long testValue = 500L;
+        node.setId(testValue);
+        assertEquals(testValue, node.getId());
+    }
 
+    @Test
+    public void setMinimumId(){
+        long testValue = 1L;
+        node.setId(testValue);
+        assertEquals(testValue, node.getId());
+    }
+
+    @Test
+    public void setMaximumId(){
+        long testValue = Long.MAX_VALUE;
+        node.setId(testValue);
+        assertEquals(testValue, node.getId());
+    }
+
+    @Test
+    public void setInvalidZeroId(){
+        long testValue = 0L;
+        node.setId(testValue);
+        assertEquals(testValue, node.getId());
+    }
+
+    @Test
+    public void setInvalidNegativeId(){
+        long testValue = -10L;
+        node.setId(testValue);
+        assertEquals(testValue, node.getId());
     }
 
 }

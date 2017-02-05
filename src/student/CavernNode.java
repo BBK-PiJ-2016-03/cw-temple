@@ -24,7 +24,7 @@ public interface CavernNode {
 
     /**
      * Setter for the node path value
-     *
+     * This should be set to the max value (in place of infinity) by default
      * @param pathValue
      * @throws IllegalArgumentException if the argument provided is negative
      */
