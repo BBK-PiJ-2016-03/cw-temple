@@ -6,9 +6,11 @@ package student;
 public class CavernNodeImpl implements CavernNode {
 
     private boolean goldenValue;
+    private int pathValue;
 
     {
         goldenValue = false;
+        pathValue = Integer.MAX_VALUE;
     }
 
     @Override
@@ -23,7 +25,7 @@ public class CavernNodeImpl implements CavernNode {
 
     @Override
     public int getPathValue() {
-        return 0;
+        return this.pathValue;
     }
 
     @Override

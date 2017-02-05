@@ -24,9 +24,11 @@ public interface CavernNode {
 
     /**
      * Setter for the node path value
+     *
      * @param pathValue
+     * @throws IllegalArgumentException if the argument provided is negative
      */
-    void setPathValue(int pathValue);
+    void setPathValue(int pathValue) throws IllegalArgumentException;
 
     /**
      * Getter for the node id
