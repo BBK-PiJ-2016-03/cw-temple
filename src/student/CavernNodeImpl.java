@@ -30,7 +30,9 @@ public class CavernNodeImpl implements CavernNode {
 
     @Override
     public void setPathValue(int pathValue) {
-
+        if(pathValue < 0)
+            throw new IllegalArgumentException();
+        this.pathValue = pathValue;
     }
 
     @Override
