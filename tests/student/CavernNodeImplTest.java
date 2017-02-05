@@ -3,6 +3,7 @@ package student;
 import org.junit.Before;
 import org.junit.Test;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -97,6 +98,35 @@ public class CavernNodeImplTest {
         long testValue = -10L;
         node.setId(testValue);
         assertEquals(testValue, node.getId());
+    }
+
+    @Test
+    public void sameIdAreEqual(){
+        long id = 12L;
+        node.setId(id);
+        CavernNode node2 = new CavernNodeImpl();
+        node2.setId(id);
+
+        assertTrue(node.equals(node2));
+    }
+
+    @Test
+    public void sameInvalidIdAreEqualIgnoringOtherFields(){
+        int value = 52;
+        node.setPathValue(value);
+        CavernNode node2 = new CavernNodeImpl();
+
+        assertTrue(node.equals(node2));
+    }
+
+    @Test
+    public void differentIdAreUnequal(){
+        long id1 = 12L, id2 = 14L;
+        node.setId(id1);
+        CavernNode node2 = new CavernNodeImpl();
+        node2.setId(id2);
+
+        assertFalse(node.equals(node2));
     }
 
 }
