@@ -10,11 +10,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class CavernMapImplTest {
 
-    CavernMap<CavernNode> map;
+    CavernMap map;
 
     @Before
     public void before(){
-        map = new CavernMapImpl<>();
+        map = new CavernMapImpl();
     }
 
     @Test
@@ -28,8 +28,8 @@ public class CavernMapImplTest {
         CavernNode node5 = addNodeWithIdToMap(map, 5);
         CavernNode node8 = addNodeWithIdToMap(map, 8);
         CavernNode node12 = addNodeWithIdToMap(map, 12);
-        map.connectNode(node5, node8);
-        map.connectNode(node5, node12);
+        map.connectNodes(node5, node8);
+        map.connectNodes(node5, node12);
         assertTrue(map.getConnectedNodes(node5).size() == 2);
     }
 
@@ -38,12 +38,12 @@ public class CavernMapImplTest {
         CavernNode node5 = addNodeWithIdToMap(map, 5);
         CavernNode node8 = addNodeWithIdToMap(map, 8);
         CavernNode node12 = addNodeWithIdToMap(map, 12);
-        map.connectNode(node5, node8);
-        map.connectNode(node5, node12);
+        map.connectNodes(node5, node8);
+        map.connectNodes(node5, node12);
         assertTrue(map.getConnectedNodes(node8).size() == 1);
     }
 
-    private CavernNode addNodeWithIdToMap(CavernMap<CavernNode> map, long id){
+    private CavernNode addNodeWithIdToMap(CavernMap map, long id){
         CavernNode node = new CavernNodeImpl();
         node.setId(id);
         map.addNode(node);
