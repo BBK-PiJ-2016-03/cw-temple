@@ -1,5 +1,7 @@
 package student;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.util.Queue;
 
 /**
@@ -30,9 +32,19 @@ public class DijkstraNavigator implements Navigator {
         if(getStartNode() == null || getDestinationNode() == null)
             throw new IllegalStateException("Start and destination nodes must be set before generating path");
 
-        setAllNodesValueToMax();
+        initialiseAllNodes();
 
         return null;
+    }
+
+    /***
+     * set the initial state of each node.
+     * - All path values to be set to max
+     * - Golden value set to false
+     * - Start node path value set to 0
+     */
+    protected void initialiseAllNodes() {
+        throw new NotImplementedException();
     }
 
     private void setMap(CavernMap map) {

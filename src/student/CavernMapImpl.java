@@ -35,4 +35,10 @@ public class CavernMapImpl implements CavernMap {
                 .distinct()
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<CavernNode> getAllNodes() {
+        return nodes.values().stream()
+                .collect(Collectors.toList());
+    }
 }
