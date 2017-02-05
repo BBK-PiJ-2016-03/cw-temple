@@ -37,18 +37,17 @@ public class Explorer {
    */
   public void explore(ExplorationState state) {
     System.out.println("Starting...");
-    CavernMap map = new CavernMap();
+    CavernMapImpl map = new CavernMapImpl();
     Navigator control = new Navigator(map);
 
     while(state.getDistanceToTarget() > 0){
       map.addCurrentNode(getNodeFromState(state), state.getNeighbours());
       state.moveTo(control.getNextMove());
     }
-
   }
 
-  private CavernSquare getNodeFromState(ExplorationState state) {
-    return new CavernSquare(state.getCurrentLocation(), state.getDistanceToTarget());
+  private CavernNodeImpl getNodeFromState(ExplorationState state) {
+    return new CavernNodeImpl(state.getCurrentLocation(), state.getDistanceToTarget());
   }
 
   /**
