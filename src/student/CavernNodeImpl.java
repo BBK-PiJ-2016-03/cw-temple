@@ -50,4 +50,17 @@ public class CavernNodeImpl implements CavernNode {
             throw new IllegalArgumentException("Provided Id is invalid. Please supply a positive id greater than zero");
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if(!(obj instanceof CavernNodeImpl))
+            return false;
+
+        return ((CavernNodeImpl)obj).id == this.id;
+    }
+
+    @Override
+    public int hashCode(){
+        return (int)(this.id % Integer.MAX_VALUE);
+    }
 }

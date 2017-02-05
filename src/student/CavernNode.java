@@ -3,7 +3,7 @@ package student;
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
-public interface CavernNode {
+public interface CavernNode{
     /**
      * used to determine if the final value of the nodes path value has been set
      * @return true if path value is golden, false otherwise
