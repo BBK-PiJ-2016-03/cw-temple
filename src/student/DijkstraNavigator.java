@@ -1,7 +1,5 @@
 package student;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.Queue;
 
 /**
@@ -44,7 +42,13 @@ public class DijkstraNavigator implements Navigator {
      * - Start node path value set to 0
      */
     protected void initialiseAllNodes() {
-        throw new NotImplementedException();
+        map.getAllNodes().forEach(e -> {
+            e.setGoldenValue(false);
+            if(e.equals(startNode))
+                e.setPathValue(0);
+            else
+                e.setPathValue(Integer.MAX_VALUE);
+        });
     }
 
     private void setMap(CavernMap map) {
