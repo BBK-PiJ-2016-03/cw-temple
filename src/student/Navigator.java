@@ -22,6 +22,7 @@ public interface Navigator {
      * get the sequence of nodes to form the path from start to destination,
      * including both starting and destination nodes
      * @return a queue of cavernNodes
+     * @throws IllegalStateException if start or destination are unset
      */
-    Queue<CavernNode> getPathFromStartToDestination();
+    Queue<CavernNode> getPathFromStartToDestination() throws IllegalStateException;
 }
