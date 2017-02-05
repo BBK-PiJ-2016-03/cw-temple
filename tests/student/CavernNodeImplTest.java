@@ -86,14 +86,14 @@ public class CavernNodeImplTest {
         assertEquals(testValue, node.getId());
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void setInvalidZeroId(){
         long testValue = 0L;
         node.setId(testValue);
         assertEquals(testValue, node.getId());
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void setInvalidNegativeId(){
         long testValue = -10L;
         node.setId(testValue);
