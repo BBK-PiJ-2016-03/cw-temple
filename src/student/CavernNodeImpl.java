@@ -5,10 +5,12 @@ package student;
  */
 public class CavernNodeImpl implements CavernNode {
 
+    long id;
     private boolean goldenValue;
     private int pathValue;
 
     {
+        id = 0;
         goldenValue = false;
         pathValue = Integer.MAX_VALUE;
     }

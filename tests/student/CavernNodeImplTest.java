@@ -59,10 +59,9 @@ public class CavernNodeImplTest {
         node.setPathValue(-5);
     }
 
-    @Test
+    @Test(expected=IllegalStateException.class)
     public void getDefaultId(){
-        long expectedDefault = 0L;
-        assertEquals(expectedDefault, node.getId());
+        node.getId();
     }
 
     @Test

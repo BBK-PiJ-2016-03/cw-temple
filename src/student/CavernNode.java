@@ -33,12 +33,14 @@ public interface CavernNode {
     /**
      * Getter for the node id
      * @return id
+     * @throws IllegalStateException if a valid id has not been set
      */
-    long getId();
+    long getId() throws IllegalStateException;
 
     /**
      * Setter for the node id
      * @param pathValue
+     * @throws IllegalArgumentException if the argument provided is les than 1
      */
-    void setId(long pathValue);
+    void setId(long pathValue) throws IllegalArgumentException;
 }
