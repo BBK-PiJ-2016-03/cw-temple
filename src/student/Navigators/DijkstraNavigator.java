@@ -1,4 +1,8 @@
-package student;
+package student.Navigators;
+
+import student.Maps.CavernMap;
+import student.Navigators.Navigator;
+import student.Nodes.CavernNode;
 
 import java.util.*;
 import java.util.stream.Collectors;

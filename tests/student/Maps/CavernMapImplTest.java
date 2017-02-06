@@ -1,7 +1,11 @@
-package student;
+package student.Maps;
 
 import org.junit.Before;
 import org.junit.Test;
+import student.Maps.CavernMap;
+import student.Maps.CavernMapImpl;
+import student.Nodes.CavernNode;
+import student.Nodes.CavernNodeImpl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

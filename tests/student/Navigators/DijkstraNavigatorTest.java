@@ -1,13 +1,18 @@
-package student;
+package student.Navigators;
 
 import org.junit.Before;
 import org.junit.Test;
+import student.Maps.CavernMap;
+import student.Maps.CavernMapImpl;
+import student.Navigators.DijkstraNavigator;
+import student.Nodes.CavernNode;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static student.TestHelperMethods.populateCavern;
 
 /**
  * Created by Alexander Worton on 05/02/2017.
@@ -16,22 +21,6 @@ public class DijkstraNavigatorTest {
 
     private CavernMap map;
     private DijkstraNavigator nav;
-
-    private void populateCavern(CavernMap map) {
-        for(int i = 1; i <= 50; i++){
-            CavernNode currentNode = generateNode(i);
-            map.addNode(currentNode);
-            if(i > 1)
-                map.connectNodes(map.getNode(i-1), currentNode);
-        }
-        map.connectNodes(map.getNode(4), map.getNode(50));
-    }
-
-    private CavernNode generateNode(int id) {
-        CavernNode node = new CavernNodeImpl();
-        node.setId(id);
-        return node;
-    }
 
     @Before
     public void before(){

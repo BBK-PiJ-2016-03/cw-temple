@@ -1,4 +1,6 @@
-package student;
+package student.Navigators;
+
+import student.Nodes.CavernNode;
 
 import java.util.List;
 

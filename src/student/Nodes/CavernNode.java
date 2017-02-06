@@ -1,4 +1,4 @@
-package student;
+package student.Nodes;
 
 /**
  * Created by Alexander Worton on 05/02/2017.

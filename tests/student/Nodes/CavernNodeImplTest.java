@@ -1,7 +1,9 @@
-package student;
+package student.Nodes;
 
 import org.junit.Before;
 import org.junit.Test;
+import student.Nodes.CavernNode;
+import student.Nodes.CavernNodeImpl;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -107,6 +109,12 @@ public class CavernNodeImplTest {
         node2.setId(id2);
 
         assertFalse(node.equals(node2));
+    }
+
+    @Test
+    public void toStringTest(){
+        String expected = "Id: 0 pathValue: "+Integer.MAX_VALUE;
+        assertEquals(expected, node.toString());
     }
 
 }

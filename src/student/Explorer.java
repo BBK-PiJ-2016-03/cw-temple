@@ -2,6 +2,8 @@ package student;
 
 import game.EscapeState;
 import game.ExplorationState;
+import student.Maps.CavernMap;
+import student.Maps.CavernMapImpl;
 
 public class Explorer {
 
@@ -37,8 +39,8 @@ public class Explorer {
    */
   public void explore(ExplorationState state) {
     System.out.println("Starting...");
-//    CavernMap map = new CavernMapImpl();
-//    Navigator control = new Navigator(map);
+    CavernMap map = new CavernMapImpl();
+//    Navigator sniffer = new HunterNavigator(map);
 
     while(state.getDistanceToTarget() > 0){
 //      map.addCurrentNode(getNodeFromState(state), state.getNeighbours());
