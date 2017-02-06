@@ -6,23 +6,11 @@ package student;
 public class CavernNodeImpl implements CavernNode {
 
     long id;
-    private boolean goldenValue;
     private int pathValue;
 
     {
         id = 0;
-        goldenValue = false;
         pathValue = Integer.MAX_VALUE;
-    }
-
-    @Override
-    public boolean isGoldenValue() {
-        return false;
-    }
-
-    @Override
-    public void setGoldenValue(boolean value) {
-        this.goldenValue = value;
     }
 
     @Override
@@ -33,7 +21,7 @@ public class CavernNodeImpl implements CavernNode {
     @Override
     public void setPathValue(int pathValue) {
         if(pathValue < 0)
-            throw new IllegalArgumentException("Path values must be valid to be set");
+            throw new IllegalArgumentException("Path values must be valid to be set. "+pathValue+" is invalid.");
         this.pathValue = pathValue;
     }
 
@@ -56,11 +44,25 @@ public class CavernNodeImpl implements CavernNode {
         if(!(obj instanceof CavernNodeImpl))
             return false;
 
-        return ((CavernNodeImpl)obj).id == this.id;
+        CavernNodeImpl cObj = (CavernNodeImpl)obj;
+
+        return cObj.id == this.id
+                && cObj.pathValue == this.pathValue
+                && cObj.hashCode() == this.hashCode();
     }
 
     @Override
     public int hashCode(){
         return (int)(this.id % Integer.MAX_VALUE);
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Id: ");
+        sb.append(id);
+        sb.append(" pathValue: ");
+        sb.append(pathValue);
+        return sb.toString();
     }
 }

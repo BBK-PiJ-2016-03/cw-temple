@@ -41,4 +41,9 @@ public class CavernMapImpl implements CavernMap {
         return nodes.values().stream()
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public CavernNode getNode(long id) {
+        return nodes.get(id);
+    }
 }

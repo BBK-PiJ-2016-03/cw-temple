@@ -1,6 +1,6 @@
 package student;
 
-import java.util.Queue;
+import java.util.List;
 
 /**
  * Created by Alexander Worton on 02/02/2017.
@@ -24,5 +24,5 @@ public interface Navigator {
      * @return a queue of cavernNodes
      * @throws IllegalStateException if start or destination are unset
      */
-    Queue<CavernNode> getPathFromStartToDestination() throws IllegalStateException;
+    List<CavernNode> getPathFromStartToDestination() throws IllegalStateException;
 }

@@ -3,6 +3,7 @@ package student;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -19,8 +20,12 @@ public class CavernMapImplTest {
 
     @Test
     public void addSingleNode() throws Exception {
-        CavernNode node = addNodeWithIdToMap(map, 14);
+        long nodeId = 14L;
+        CavernNode node = addNodeWithIdToMap(map, nodeId);
+        node.setPathValue(54265);
         assertTrue(map.getConnectedNodes(node).size() == 0);
+        assertTrue(map.getNode(nodeId).getPathValue() == node.getPathValue());
+        assertEquals(node, map.getNode(nodeId));
     }
 
     @Test

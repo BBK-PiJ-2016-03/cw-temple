@@ -19,17 +19,6 @@ public class CavernNodeImplTest {
     }
 
     @Test
-    public void isGoldenValueFalse(){
-        assertFalse(node.isGoldenValue());
-    }
-
-    @Test
-    public void isGoldenValueTrue(){
-        node.setGoldenValue(true);
-        assertFalse(node.isGoldenValue());
-    }
-
-    @Test
     public void getDefaultPathValue(){
         assertEquals(Integer.MAX_VALUE, node.getPathValue());
     }
@@ -106,15 +95,6 @@ public class CavernNodeImplTest {
         node.setId(id);
         CavernNode node2 = new CavernNodeImpl();
         node2.setId(id);
-
-        assertTrue(node.equals(node2));
-    }
-
-    @Test
-    public void sameInvalidIdAreEqualIgnoringOtherFields(){
-        int value = 52;
-        node.setPathValue(value);
-        CavernNode node2 = new CavernNodeImpl();
 
         assertTrue(node.equals(node2));
     }

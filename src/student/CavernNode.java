@@ -5,18 +5,6 @@ package student;
  */
 public interface CavernNode{
     /**
-     * used to determine if the final value of the nodes path value has been set
-     * @return true if path value is golden, false otherwise
-     */
-    boolean isGoldenValue();
-
-    /**
-     * Setter for the node Golden value flag
-     * @param value true or false
-     */
-    void setGoldenValue(boolean value);
-
-    /**
      * Getter for the node path value
      * @return path value
      */

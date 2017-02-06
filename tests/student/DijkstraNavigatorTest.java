@@ -19,11 +19,12 @@ public class DijkstraNavigatorTest {
 
     private void populateCavern(CavernMap map) {
         for(int i = 1; i <= 50; i++){
-            map.addNode(generateNode(i));
+            CavernNode currentNode = generateNode(i);
+            map.addNode(currentNode);
             if(i > 1)
-                map.connectNodes(generateNode(i-1), generateNode(i));
+                map.connectNodes(map.getNode(i-1), currentNode);
         }
-        map.connectNodes(generateNode(4), generateNode(50));
+        map.connectNodes(map.getNode(4), map.getNode(50));
     }
 
     private CavernNode generateNode(int id) {
@@ -46,34 +47,34 @@ public class DijkstraNavigatorTest {
 
     @Test(expected=IllegalStateException.class)
     public void getPathThrowsOnUnsetStartOnly() {
-        nav.setDestinationNode(generateNode(5));
+        nav.setDestinationNode(map.getNode(5));
         nav.getPathFromStartToDestination();
     }
 
     @Test(expected=IllegalStateException.class)
     public void getPathThrowsOnUnsetDestinationOnly() {
-        nav.setStartNode(generateNode(5));
+        nav.setStartNode(map.getNode(5));
         nav.getPathFromStartToDestination();
     }
 
     @Test
     public void getPathFromStartToDestination(){
-        nav.setStartNode(generateNode(1));
-        nav.setDestinationNode(generateNode(50));
-        List<CavernNode> expected =  Arrays.asList(generateNode(1),
-                                                    generateNode(2),
-                                                    generateNode(3),
-                                                    generateNode(4),
-                                                    generateNode(50));
+        nav.setStartNode(map.getNode(1));
+        nav.setDestinationNode(map.getNode(50));
+        List<CavernNode> expected =  Arrays.asList(map.getNode(1),
+                map.getNode(2),
+                map.getNode(3),
+                map.getNode(4),
+                map.getNode(50));
 
         assertEquals(expected, nav.getPathFromStartToDestination());
     }
 
     @Test
     public void initialiseAllNodes(){
-        CavernNode start = generateNode(1);
+        CavernNode start = map.getNode(1);
         nav.setStartNode(start);
-        nav.setDestinationNode(generateNode(50));
+        nav.setDestinationNode(map.getNode(50));
 
         setAllNodesUninitialised();
         nav.initialiseAllNodes();
@@ -82,7 +83,6 @@ public class DijkstraNavigatorTest {
 
     private void assertAllNodesCorrectlyInitialised(CavernNode start) {
         map.getAllNodes().forEach(e -> {
-            assertTrue(e.isGoldenValue() == false);
             if(e.equals(start))
                 assertTrue(e.getPathValue() == 0);
             else
@@ -92,7 +92,6 @@ public class DijkstraNavigatorTest {
 
     private void setAllNodesUninitialised() {
         map.getAllNodes().forEach(e -> {
-            e.setGoldenValue(true);
             e.setPathValue(5);
         });
     }

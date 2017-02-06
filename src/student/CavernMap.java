@@ -34,5 +34,11 @@ public interface CavernMap {
      */
     List<CavernNode> getAllNodes();
 
+    /**
+     * getter to return the latest stored properties for a node with a given Id
+     * @return the matching node held in the map
+     */
+    CavernNode getNode(long id);
+
 
 }
