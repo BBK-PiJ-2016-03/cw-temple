@@ -1,6 +1,5 @@
 package student.Maps;
 
-import student.Maps.CavernMap;
 import student.Nodes.CavernNode;
 
 import java.util.*;
@@ -48,5 +47,10 @@ public class CavernMapImpl implements CavernMap {
     @Override
     public CavernNode getNode(long id) {
         return nodes.get(id);
+    }
+
+    @Override
+    public Boolean contains(long id) {
+        return nodes.get(id) != null;
     }
 }

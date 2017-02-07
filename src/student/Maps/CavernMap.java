@@ -42,5 +42,12 @@ public interface CavernMap {
      */
     CavernNode getNode(long id);
 
+    /**
+     * Check that the id supplied belongs to a known node
+     * @param id the search value
+     * @return true if node found false otherwise
+     */
+    Boolean contains(long id);
+
 
 }

@@ -18,6 +18,8 @@ public class TargetSeeker implements Seeker {
 
     @Override
     public long getNextMove(long location) {
+        if(!map.contains(location))
+            throw new IllegalStateException("Node with that id not known");
         return 0;
     }
 
