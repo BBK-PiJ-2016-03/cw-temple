@@ -8,10 +8,13 @@ public class CavernNodeImpl implements CavernNode {
     long id;
     private int pathValue;
     private Boolean visited;
+    private int distance;
 
     {
         id = 0;
         pathValue = Integer.MAX_VALUE;
+        visited = false;
+        distance = Integer.MAX_VALUE;
     }
 
     public CavernNodeImpl(){}
@@ -34,12 +37,14 @@ public class CavernNodeImpl implements CavernNode {
 
     @Override
     public int getDistance() {
-        return 0;
+        return this.distance;
     }
 
     @Override
     public void setDistance(int distance) throws IllegalArgumentException {
-
+        if(distance < 0)
+            throw new IllegalArgumentException("Distance cannot be negative");
+        this.distance = distance;
     }
 
     @Override
