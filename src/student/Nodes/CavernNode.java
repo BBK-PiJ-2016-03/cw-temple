@@ -19,6 +19,20 @@ public interface CavernNode{
     void setPathValue(int pathValue) throws IllegalArgumentException;
 
     /**
+     * Getter for the node distance value
+     * @return distance value
+     */
+    int getDistance();
+
+    /**
+     * Setter for the node distance value
+     * This should be set to the max value by default
+     * @param distance
+     * @throws IllegalArgumentException if the argument provided is negative
+     */
+    void setDistance(int distance) throws IllegalArgumentException;
+
+    /**
      * Getter for the node id
      * @return id
      * @throws IllegalStateException if a valid id has not been set
@@ -42,5 +56,5 @@ public interface CavernNode{
      * Setter for the visited state
      * @param visited the new state
      */
-    void seVisited(Boolean visited);
+    void setVisited(Boolean visited);
 }

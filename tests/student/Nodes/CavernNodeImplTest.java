@@ -2,18 +2,21 @@ package student.Nodes;
 
 import org.junit.Before;
 import org.junit.Test;
-import student.Nodes.CavernNode;
-import student.Nodes.CavernNodeImpl;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import java.util.Random;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
 public class CavernNodeImplTest {
     private CavernNode node;
+    private Random rand;
+
+    {
+        rand = new Random();
+    }
 
     @Before
     public void before(){
@@ -117,4 +120,60 @@ public class CavernNodeImplTest {
         assertEquals(expected, node.toString());
     }
 
+    @Test
+    public void isVisitedFalseTest(){
+        Boolean expected = false;
+        assertEquals(expected, node.isVisited());
+    }
+
+    @Test
+    public void isVisitedTrueTest(){
+        node.setVisited(true);
+        Boolean expected = true;
+        assertEquals(expected, node.isVisited());
+    }
+
+    @Test
+    public void isVisitedToggleFalseTest(){
+        node.setVisited(true);
+        node.setVisited(false);
+        Boolean expected = false;
+        assertEquals(expected, node.isVisited());
+    }
+
+    @Test
+    public void isVisitedToggleTrueTest(){
+        node.setVisited(false);
+        node.setVisited(true);
+        Boolean expected = true;
+        assertEquals(expected, node.isVisited());
+    }
+
+    @Test
+    public void getDistanceDefault(){
+        int expected = Integer.MAX_VALUE;
+        assertEquals(expected, node.getDistance());
+    }
+
+    @Test
+    public void setDistanceTestRandom(){
+        for(int i = 0; i < 1000; i++) {
+            int expected = Math.abs(rand.nextInt());
+            node.setDistance(expected);
+            assertEquals(expected, node.getDistance());
+        }
+    }
+
+    @Test
+    public void setDistanceTestZero(){
+        int expected = 0;
+        node.setDistance(expected);
+        assertEquals(expected, node.getDistance());
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void setDistanceTestNegative(){
+        int negative = -100;
+        node.setDistance(negative);
+    }
 }

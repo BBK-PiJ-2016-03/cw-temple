@@ -6,6 +6,7 @@ import student.Nodes.CavernNode;
 import student.Nodes.CavernNodeImpl;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -64,7 +65,16 @@ public class TargetSeeker implements Seeker {
         return getNextPathNodeId();
     }
 
+    /**
+     *
+     * @return an unvisited node which is closest to target
+     */
     private CavernNode getClosestUnvisitedNodeOnMap() {
+        return map.getAllNodes().stream()
+                .filter(n -> !n.isVisited())
+                .sorted(Comparator.comparingInt(n -> n.getDistance()))
+                .findFirst()
+                .get();
     }
 
     /**
