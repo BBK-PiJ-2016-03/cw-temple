@@ -40,6 +40,7 @@ public class Explorer {
   public void explore(ExplorationState state) {
     System.out.println("Starting...");
     CavernMap map = new CavernMapImpl();
+    state.getNeighbours();
 //    Navigator sniffer = new HunterNavigator(map);
 
     while(state.getDistanceToTarget() > 0){

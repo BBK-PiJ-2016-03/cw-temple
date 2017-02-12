@@ -1,5 +1,9 @@
 package student.Navigators;
 
+import game.NodeStatus;
+
+import java.util.Collection;
+
 /**
  * Created by Alexander Worton on 06/02/2017.
  */
@@ -11,5 +15,5 @@ public interface Seeker {
      * @return the next move
      * @throws IllegalStateException if the currentLocation is unknown
      */
-    long getNextMove(long currentLocation) throws IllegalStateException;
+    long getNextMove(long currentLocation, Collection<NodeStatus> neighbours) throws IllegalStateException;
 }

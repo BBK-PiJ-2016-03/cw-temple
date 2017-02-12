@@ -31,4 +31,16 @@ public interface CavernNode{
      * @throws IllegalArgumentException if the argument provided is les than 1
      */
     void setId(long pathValue) throws IllegalArgumentException;
+
+    /**
+     * Getter for visited state
+     * @return true if node has been visited, false otherwise
+     */
+    Boolean isVisited();
+
+    /**
+     * Setter for the visited state
+     * @param visited the new state
+     */
+    void seVisited(Boolean visited);
 }

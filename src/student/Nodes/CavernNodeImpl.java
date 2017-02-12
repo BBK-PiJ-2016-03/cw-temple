@@ -13,6 +13,12 @@ public class CavernNodeImpl implements CavernNode {
         pathValue = Integer.MAX_VALUE;
     }
 
+    public CavernNodeImpl(){}
+
+    public CavernNodeImpl(long id){
+        setId(id);
+    }
+
     @Override
     public int getPathValue() {
         return this.pathValue;
