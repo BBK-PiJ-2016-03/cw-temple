@@ -80,8 +80,8 @@ public class CavernNodeImplTest {
         assertEquals(testValue, node.getId());
     }
 
-    @Test(expected=IllegalArgumentException.class)
-    public void setInvalidZeroId(){
+    @Test
+    public void setValidZeroId(){
         long testValue = 0L;
         node.setId(testValue);
         assertEquals(testValue, node.getId());
@@ -112,12 +112,6 @@ public class CavernNodeImplTest {
         node2.setId(id2);
 
         assertFalse(node.equals(node2));
-    }
-
-    @Test
-    public void toStringTest(){
-        String expected = "Id: 0 pathValue: "+Integer.MAX_VALUE;
-        assertEquals(expected, node.toString());
     }
 
     @Test

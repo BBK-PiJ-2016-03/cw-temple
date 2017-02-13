@@ -4,6 +4,11 @@ import game.EscapeState;
 import game.ExplorationState;
 import student.Maps.CavernMap;
 import student.Maps.CavernMapImpl;
+import student.Navigators.DijkstraNavigator;
+import student.Navigators.Navigator;
+import student.Navigators.Seeker;
+import student.Navigators.TargetSeeker;
+import student.Nodes.CavernNodeImpl;
 
 public class Explorer {
 
@@ -39,19 +44,22 @@ public class Explorer {
    */
   public void explore(ExplorationState state) {
     System.out.println("Starting...");
+
     CavernMap map = new CavernMapImpl();
-    state.getNeighbours();
-//    Navigator sniffer = new HunterNavigator(map);
+    Navigator navigator = new DijkstraNavigator(map);
+    Seeker seeker = new TargetSeeker(navigator, map);
+
+    //add start
+    map.addNode(new CavernNodeImpl(state.getCurrentLocation(), state.getDistanceToTarget()));
+    map.getNode(0).setVisited(true);
 
     while(state.getDistanceToTarget() > 0){
-//      map.addCurrentNode(getNodeFromState(state), state.getNeighbours());
-//      state.moveTo(control.getNextMove());
+        long move = seeker.getNextMove(state.getCurrentLocation(), state.getNeighbours());
+        System.out.println("Moving to node "+move);
+        System.out.println("Map: "+map);
+        state.moveTo(move);
     }
   }
-
-//  private CavernNodeImpl getNodeFromState(ExplorationState state) {
-//    return new CavernNodeImpl(state.getCurrentLocation(), state.getDistanceToTarget());
-//  }
 
   /**
    * Escape from the cavern before the ceiling collapses, trying to collect as much

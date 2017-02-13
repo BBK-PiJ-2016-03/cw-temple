@@ -11,7 +11,7 @@ public class CavernNodeImpl implements CavernNode {
     private int distance;
 
     {
-        id = 0;
+        id = -1;
         pathValue = Integer.MAX_VALUE;
         visited = false;
         distance = Integer.MAX_VALUE;
@@ -21,6 +21,11 @@ public class CavernNodeImpl implements CavernNode {
 
     public CavernNodeImpl(long id){
         setId(id);
+    }
+
+    public CavernNodeImpl(long id, int distance){
+        setId(id);
+        setDistance(distance);
     }
 
     @Override
@@ -49,15 +54,15 @@ public class CavernNodeImpl implements CavernNode {
 
     @Override
     public long getId() {
-        if(this.id < 1)
+        if(this.id < 0)
             throw new IllegalStateException("Id has not yet been set for this node");
         return this.id;
     }
 
     @Override
     public void setId(long id) {
-        if(id < 1)
-            throw new IllegalArgumentException("Provided Id is invalid. Please supply a positive id greater than zero");
+        if(id < 0)
+            throw new IllegalArgumentException("Provided Id is invalid. Please supply a positive id >= 0");
         this.id = id;
     }
 
@@ -93,8 +98,10 @@ public class CavernNodeImpl implements CavernNode {
         StringBuilder sb = new StringBuilder();
         sb.append("Id: ");
         sb.append(id);
-        sb.append(" pathValue: ");
+        sb.append(" pv: ");
         sb.append(pathValue);
+        sb.append(" dist: ");
+        sb.append(distance);
         return sb.toString();
     }
 }

@@ -26,9 +26,9 @@ public class TargetSeeker implements Seeker {
 
     @Override
     public long getNextMove(long location, Collection<NodeStatus> neighbours) {
-        setCurrentLocationId(location);
         if(!map.contains(location))
             throw new IllegalStateException("Node with that id not known");
+        setCurrentLocationId(location);
         CavernNode currentLocation = map.getNode(location);
         addNeighboursToMap(currentLocation, neighbours);
         return getNextClosestNodeId(neighbours);
@@ -149,7 +149,12 @@ public class TargetSeeker implements Seeker {
         return this.path != null && this.path.size() > 0;
     }
 
+    /**
+     * Set the currentLocation and mark it as visited.
+     * @param currentLocationId
+     */
     public void setCurrentLocationId(long currentLocationId) {
         this.currentLocationId = currentLocationId;
+        map.getNode(currentLocationId).setVisited(true);
     }
 }

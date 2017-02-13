@@ -53,4 +53,11 @@ public class CavernMapImpl implements CavernMap {
     public Boolean contains(long id) {
         return nodes.get(id) != null;
     }
+
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        nodes.values().forEach(n -> {sb.append(n); sb.append("\n");});
+        return sb.toString();
+    }
 }

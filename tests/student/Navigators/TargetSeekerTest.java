@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static student.TestHelperMethods.getMockNeighbours;
 import static student.TestHelperMethods.populateCavern;
 
@@ -65,6 +67,13 @@ public class TargetSeekerTest {
 
         expected = 3L;
         assertEquals(expected, seeker.getNextMove(2L, new ArrayList<>()));
+    }
+
+    @Test
+    public void nodesMarkedAsVisited(){
+        assertFalse(map.getNode(1L).isVisited());
+        seeker.getNextMove(1L, new ArrayList<>());
+        assertTrue(map.getNode(1L).isVisited());
     }
 
 }
