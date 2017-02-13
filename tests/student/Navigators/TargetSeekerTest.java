@@ -6,6 +6,7 @@ import org.junit.Test;
 import student.Maps.CavernMap;
 import student.Maps.CavernMapImpl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static org.junit.Assert.assertEquals;
@@ -49,6 +50,21 @@ public class TargetSeekerTest {
         //valid nodes from populateCavern are 1-50. Each node is connected in turn, plus a connection from  4 to 50
         long expected = 2L;
         assertEquals(expected, seeker.getNextMove(1L, neighbours));
+    }
+
+    @Test
+    public void getNextMoveAsPath(){
+        map.getNode(3).setDistance(95);
+        map.getNode(2).setDistance(90);
+        map.getNode(2).setVisited(true);
+        map.getNode(1).setDistance(85);
+        map.getNode(1).setVisited(true);
+
+        long expected = 2L;
+        assertEquals(expected, seeker.getNextMove(1L, new ArrayList<>()));
+
+        expected = 3L;
+        assertEquals(expected, seeker.getNextMove(2L, new ArrayList<>()));
     }
 
 }

@@ -66,7 +66,6 @@ public class TestHelperMethods {
             }
         }
 
-        neighbours.forEach(n -> System.out.println("Node ID: "+n.getId()+" Distance: "+n.getDistanceToTarget()));
         return neighbours;
     }
 }

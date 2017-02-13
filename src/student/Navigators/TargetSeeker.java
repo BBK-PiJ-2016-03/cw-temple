@@ -31,7 +31,7 @@ public class TargetSeeker implements Seeker {
             throw new IllegalStateException("Node with that id not known");
         CavernNode currentLocation = map.getNode(location);
         addNeighboursToMap(currentLocation, neighbours);
-        return getNextClosestNodeId();
+        return getNextClosestNodeId(neighbours);
     }
 
     /**
@@ -39,30 +39,45 @@ public class TargetSeeker implements Seeker {
      * to the next closest unexplored node in map
      * @return next closest node to target
      */
-    private long getNextClosestNodeId() {
+    private long getNextClosestNodeId(Collection<NodeStatus> neighbours) {
         if(pathExists())
             return getNextPathNodeId();
-        return getNextNodeId();
+        return getNextNodeId(neighbours);
     }
 
-    private long getNextNodeId() {
-        Long nextNodeId = getClosestNeighbourNode();
+    private long getNextNodeId(Collection<NodeStatus> neighbours) {
+        Long nextNodeId = getClosestNeighbourNode(neighbours);
         if(nextNodeId == null) {
             nextNodeId = getNewPathToClosestAvailableNode();
         }
         return nextNodeId;
     }
 
-    private long getClosestNeighbourNode(){
-        long nodeId = 0L;
-        return nodeId;
+    private Long getClosestNeighbourNode(Collection<NodeStatus> neighbours){
+        return neighbours.stream()
+                .sorted(Comparator.comparingInt(n -> n.getDistanceToTarget()))
+                .map(n -> map.getNode(n.getId()))
+                .filter(n -> !n.isVisited())
+                .findFirst()
+                .map(n -> n.getId())
+                .orElse(null);
     }
 
     private long getNewPathToClosestAvailableNode() {
         navigator.setStartNode(map.getNode(this.currentLocationId));
         navigator.setDestinationNode(getClosestUnvisitedNodeOnMap());
-        this.path = navigator.getPathFromStartToDestination();
+        setNewPath();
         return getNextPathNodeId();
+    }
+
+    /**
+     * grabs the new path from the navigator, then removes the starting
+     * node if that is the current location
+     */
+    private void setNewPath() {
+        this.path = navigator.getPathFromStartToDestination();
+        if(this.path.get(0).getId() == currentLocationId)
+            this.path.remove(0);
     }
 
     /**
@@ -84,12 +99,24 @@ public class TargetSeeker implements Seeker {
      */
     private void addNeighboursToMap(CavernNode currentLocation, Collection<NodeStatus> neighbours) {
         neighbours.forEach(n -> {
-            if(!map.contains(n.getId())) {
-                CavernNode node = new CavernNodeImpl(n.getId());
-                map.addNode(node);
-                map.connectNodes(currentLocation, node);
-            }
+            CavernNode node = addToOrGetExistingNodeFromMap(n);
+            map.connectNodes(currentLocation, node);
         });
+    }
+
+    /**
+     * Check that a node with the id is in the map, if so, return it
+     * otherwise add a new node to the map and return that.
+     * @param n a nodestatus object received from the game.
+     * @return node from map
+     */
+    private CavernNode addToOrGetExistingNodeFromMap(NodeStatus n) {
+        if(!map.contains(n.getId())) {
+            CavernNode node = new CavernNodeImpl(n.getId());
+            node.setDistance(n.getDistanceToTarget());
+            map.addNode(node);
+        }
+        return map.getNode(n.getId());
     }
 
     public Navigator getNavigator() {
