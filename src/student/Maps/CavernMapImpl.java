@@ -1,8 +1,13 @@
 package student.Maps;
 
+import student.DataObjects.Connection;
+import student.DataObjects.NodeConnection;
 import student.Nodes.CavernNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -11,7 +16,7 @@ import java.util.stream.Collectors;
 public class CavernMapImpl implements CavernMap {
 
     private Map<Long, CavernNode> nodes = new HashMap<>();
-    private List<Set<CavernNode>> connections = new ArrayList<>();
+    private List<Connection> connections = new ArrayList<>();
 
     @Override
     public void addNode(CavernNode node) {
@@ -19,21 +24,31 @@ public class CavernMapImpl implements CavernMap {
     }
 
     @Override
-    public void connectNodes(CavernNode start, CavernNode end) {
-        Set<CavernNode> connection = new HashSet<>(Arrays.asList(start, end));
+    public void connectNodes(CavernNode start, CavernNode end, int weight) {
+        if(!nodes.values().contains(start) || !nodes.values().contains(end))
+            throw new IllegalArgumentException("Node not known in CavernMap");
+
+        Connection connection = new Connection(weight, start, end);
+
         if(!connections.contains(connection))
             connections.add(connection);
+        else
+            connections.add(connections.indexOf(connection), connection);
     }
 
     @Override
-    public List<CavernNode> getConnectedNodes(CavernNode targetNode) throws IllegalArgumentException {
+    public void connectNodes(CavernNode start, CavernNode end) {
+        connectNodes(start, end, 1);
+    }
+
+    @Override
+    public List<NodeConnection> getConnectedNodes(CavernNode targetNode) throws IllegalArgumentException {
         if(!nodes.values().contains(targetNode))
             throw new IllegalArgumentException("Node not known in CavernMap");
 
         return connections.stream()
-                .filter(set -> set.contains(targetNode))
-                .flatMap(set -> set.stream())
-                .filter(node -> !node.equals(targetNode))
+                .filter(connection -> connection.getConnectedNodes().contains(targetNode))
+                .map(connection -> connection.getConnectedNode(targetNode))
                 .distinct()
                 .collect(Collectors.toList());
     }

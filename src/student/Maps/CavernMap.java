@@ -1,5 +1,6 @@
 package student.Maps;
 
+import student.DataObjects.NodeConnection;
 import student.Nodes.CavernNode;
 
 import java.util.List;
@@ -20,15 +21,22 @@ public interface CavernMap {
      * @param start
      * @param end
      */
+    void connectNodes(CavernNode start, CavernNode end, int weight);
+
+    /**
+     * Connects the supplied nodes if unconnected. Overload to default weight to 1.
+     * @param start
+     * @param end
+     */
     void connectNodes(CavernNode start, CavernNode end);
 
     /**
      *
      * @param node
-     * @return a list of nodes connected to the supplied node. List is empty if no nodes are connected
+     * @return a list of nodeConnections connected to the supplied node. List is empty if no nodes are connected
      * @throws IllegalArgumentException if the supplied node is unknown to the map
      */
-    List<CavernNode> getConnectedNodes(CavernNode node) throws IllegalArgumentException;
+    List<NodeConnection> getConnectedNodes(CavernNode node) throws IllegalArgumentException;
 
     /**
      * Getter for all nodes

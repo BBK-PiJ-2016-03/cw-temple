@@ -1,10 +1,12 @@
 package student.Navigators;
 
+import student.DataObjects.NodeConnection;
 import student.Maps.CavernMap;
-import student.Navigators.Navigator;
 import student.Nodes.CavernNode;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -72,7 +74,7 @@ public class DijkstraNavigator implements Navigator {
         List<CavernNode> path = new LinkedList<>();
         path.add(0,currentNode);
         while (currentNode != startNode){
-            currentNode = getLowestPathValueNeighbour(currentNode);
+            currentNode = getLowestPathValueNeighbour(currentNode).getNode();
             path.add(0,currentNode);
         }
         return path;
@@ -84,25 +86,25 @@ public class DijkstraNavigator implements Navigator {
      * @param currentNode
      * @return
      */
-    private CavernNode getLowestPathValueNeighbour(CavernNode currentNode) {
+    private NodeConnection getLowestPathValueNeighbour(CavernNode currentNode) {
         return map.getConnectedNodes(currentNode).stream()
-                .sorted(Comparator.comparingInt(e -> e.getPathValue()))
+                .sorted(Comparator.comparingInt(e -> e.getNode().getPathValue()))
                 .findFirst()
                 .get();
     }
 
     /**
      * All neighbours of a specified node are processed by updating their path value
-     * to be the value of the previous node + 1 (since all paths are unweighted) if
-     * and only if this new path represents a shorte path (by being a smaller path value
+     * to be the value of the previous node + weight if and only if this new path
+     * represents a shorter path (by being a smaller path value).
      * @param currentNode the current node being checked
      */
     private void processNeighbours(CavernNode currentNode) {
-        List<CavernNode> neighbours = map.getConnectedNodes(currentNode);
-        int newPathValue = currentNode.getPathValue()+1;
-        neighbours.forEach(n -> {
-            if(n.getPathValue() > newPathValue)
-                n.setPathValue(newPathValue);
+        List<NodeConnection> neighbours = map.getConnectedNodes(currentNode);
+        int prevPathValue = currentNode.getPathValue();
+        neighbours.forEach(e -> {
+            if(e.getNode().getPathValue() > (prevPathValue + e.getPathWeight()))
+                e.getNode().setPathValue(prevPathValue + e.getPathWeight());
         });
     }
 

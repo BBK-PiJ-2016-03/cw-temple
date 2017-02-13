@@ -10,6 +10,8 @@ import student.Navigators.Seeker;
 import student.Navigators.TargetSeeker;
 import student.Nodes.CavernNodeImpl;
 
+import static student.Maps.MapImport.convertVerticesToMap;
+
 public class Explorer {
 
   /**
@@ -51,12 +53,10 @@ public class Explorer {
 
     //add start
     map.addNode(new CavernNodeImpl(state.getCurrentLocation(), state.getDistanceToTarget()));
-    map.getNode(0).setVisited(true);
+    map.getNode(state.getCurrentLocation()).setVisited(true);
 
     while(state.getDistanceToTarget() > 0){
         long move = seeker.getNextMove(state.getCurrentLocation(), state.getNeighbours());
-        System.out.println("Moving to node "+move);
-        System.out.println("Map: "+map);
         state.moveTo(move);
     }
   }
@@ -86,5 +86,17 @@ public class Explorer {
    */
   public void escape(EscapeState state) {
     //TODO: Escape from the cavern before time runs out
+      CavernMap map = new CavernMapImpl();
+      Navigator navigator = new DijkstraNavigator(map);
+
+      Seeker seeker = new TargetSeeker(navigator, map);
+
+      convertVerticesToMap(state.getVertices(), map);
+
+      //add start
+      //map.addNode(new CavernNodeImpl(state.getCurrentNode()));
+      //map.getNode(0).setVisited(true);
+
+      //state.
   }
 }
