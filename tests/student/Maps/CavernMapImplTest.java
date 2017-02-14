@@ -2,8 +2,6 @@ package student.Maps;
 
 import org.junit.Before;
 import org.junit.Test;
-import student.Maps.CavernMap;
-import student.Maps.CavernMapImpl;
 import student.Nodes.CavernNode;
 import student.Nodes.CavernNodeImpl;
 
@@ -50,6 +48,21 @@ public class CavernMapImplTest {
         map.connectNodes(node5, node8);
         map.connectNodes(node5, node12);
         assertTrue(map.getConnectedNodes(node8).size() == 1);
+    }
+
+    @Test
+    public void getConnectedNodesWeightTest(){
+        int expected20to21 = 1;
+        int expected21to22 = 5;
+
+        CavernNode node20 = addNodeWithIdToMap(map, 20);
+        CavernNode node21 = addNodeWithIdToMap(map, 21);
+        CavernNode node22 = addNodeWithIdToMap(map, 22);
+        map.connectNodes(node20, node21);
+        map.connectNodes(node21, node22, expected21to22);
+
+        assertEquals(expected20to21, map.getConnectedNodesWeight(node21, node20));
+        assertEquals(expected21to22, map.getConnectedNodesWeight(node22, node21));
     }
 
     private CavernNode addNodeWithIdToMap(CavernMap map, long id){

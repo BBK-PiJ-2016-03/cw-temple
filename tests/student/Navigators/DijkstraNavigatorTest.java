@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import student.Maps.CavernMap;
 import student.Maps.CavernMapImpl;
-import student.Navigators.DijkstraNavigator;
 import student.Nodes.CavernNode;
 
 import java.util.Arrays;
@@ -68,6 +67,14 @@ public class DijkstraNavigatorTest {
         setAllNodesUninitialised();
         nav.initialiseAllNodes();
         assertAllNodesCorrectlyInitialised(start);
+    }
+
+    @Test
+    public void getShortestDistanceToDestinationTest(){
+        nav.setStartNode(map.getNode(1L));
+        nav.setDestinationNode(map.getNode(2L));
+        int expected = 1;
+        assertEquals(expected, nav.getShortestDistanceToDestination());
     }
 
     private void assertAllNodesCorrectlyInitialised(CavernNode start) {

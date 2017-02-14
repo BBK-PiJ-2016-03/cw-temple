@@ -45,6 +45,12 @@ public class TargetSeeker implements Seeker {
         return getNextNodeId(neighbours);
     }
 
+    /**
+     * Attempt to retrieve the neighbour closest to target, if there is no such
+     * neighbour, get a path back to the closest seen node to the target node.
+     * @param neighbours of the current location
+     * @return the id of the next node to visit
+     */
     private long getNextNodeId(Collection<NodeStatus> neighbours) {
         Long nextNodeId = getClosestNeighbourNode(neighbours);
         if(nextNodeId == null) {
@@ -53,6 +59,11 @@ public class TargetSeeker implements Seeker {
         return nextNodeId;
     }
 
+    /**
+     * Retrieve the neighbouring node which is closest to the target node
+     * @param neighbours
+     * @return id of closest node to target, null if none exists
+     */
     private Long getClosestNeighbourNode(Collection<NodeStatus> neighbours){
         return neighbours.stream()
                 .sorted(Comparator.comparingInt(n -> n.getDistanceToTarget()))
@@ -63,6 +74,10 @@ public class TargetSeeker implements Seeker {
                 .orElse(null);
     }
 
+    /**
+     * generate a path/route to the closest known node to the target
+     * @return the id of the first node to move to from the current node
+     */
     private long getNewPathToClosestAvailableNode() {
         navigator.setStartNode(map.getNode(this.currentLocationId));
         navigator.setDestinationNode(getClosestUnvisitedNodeOnMap());
@@ -81,15 +96,23 @@ public class TargetSeeker implements Seeker {
     }
 
     /**
-     *
-     * @return an unvisited node which is closest to target
+     * Get the node to path to by taking into account both the via nodes
+     * distance to the target and the distance from current location to the node
+     * @return an unvisited node which is closest navigate to target
      */
     private CavernNode getClosestUnvisitedNodeOnMap() {
         return map.getAllNodes().stream()
                 .filter(n -> !n.isVisited())
-                .sorted(Comparator.comparingInt(n -> n.getDistance()))
+                .sorted(Comparator.comparingInt(n -> (n.getDistance() + getDistanceToNode(n))))
+                .peek(n -> System.out.println(n.getDistance()))
                 .findFirst()
                 .get();
+    }
+
+    private int getDistanceToNode(CavernNode n) {
+        navigator.setStartNode(map.getNode(this.currentLocationId));
+        navigator.setDestinationNode(n);
+        return navigator.getShortestDistanceToDestination();
     }
 
     /**
@@ -145,6 +168,10 @@ public class TargetSeeker implements Seeker {
         return path.remove(0).getId();
     }
 
+    /**
+     *
+     * @return true if a valid path exists, false otherwise
+     */
     private Boolean pathExists(){
         return this.path != null && this.path.size() > 0;
     }

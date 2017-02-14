@@ -31,6 +31,14 @@ public interface CavernMap {
     void connectNodes(CavernNode start, CavernNode end);
 
     /**
+     * Get the weight of the connection between two nodes
+     * @param start
+     * @param end
+     * @return the weight of the connected nodes
+     */
+    int getConnectedNodesWeight(CavernNode start, CavernNode end);
+
+    /**
      *
      * @param node
      * @return a list of nodeConnections connected to the supplied node. List is empty if no nodes are connected

@@ -27,4 +27,10 @@ public interface Navigator {
      * @throws IllegalStateException if start or destination are unset
      */
     List<CavernNode> getPathFromStartToDestination() throws IllegalStateException;
+
+    /**
+     *
+     * @return shortest distance from source to destination
+     */
+    int getShortestDistanceToDestination();
 }

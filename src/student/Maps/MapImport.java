@@ -24,11 +24,11 @@ public class MapImport {
         });
     }
 
-    private static void connectNeighbourToSourceNode(long source, long neighbour, CavernMap map) {
+    private static void connectNeighbourToSourceNode(long source, long neighbour, EscapeCavernMap map) {
         map.connectNodes(map.getNode(source), map.getNode(neighbour));
     }
 
-    private static void addNodeIfUnknown(long id, int gold, CavernMap map) {
+    private static void addNodeIfUnknown(long id, int gold, EscapeCavernMap map) {
         if(!map.contains(id))
             map.addNode(new CavernNodeImpl(id));
             map.setNodeGold(map.getNode(id), gold);

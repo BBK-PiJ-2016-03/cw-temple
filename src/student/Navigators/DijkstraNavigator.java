@@ -45,6 +45,28 @@ public class DijkstraNavigator implements Navigator {
         return getShortestPath(map.getAllNodes());
     }
 
+    @Override
+    public int getShortestDistanceToDestination() {
+        if(getStartNode() == null || getDestinationNode() == null)
+            throw new IllegalStateException("Start and destination nodes must be set before generating path");
+        initialiseAllNodes();
+        List<CavernNode> path = getShortestPath(map.getAllNodes());
+        return getPathDistance(path);
+    }
+
+    /**
+     * walk the path and return the sum of the vertices weight
+     */
+    private int getPathDistance(List<CavernNode> path) {
+        int pathDistance = 0;
+        for(int i = 0; i < path.size(); i++){
+            if(i > 0){
+                pathDistance += map.getConnectedNodesWeight(path.get(i), path.get(i-1));
+            }
+        }
+        return pathDistance;
+    }
+
     /**
      * This is the driving method for obtaining the shortest path. Nodes (in order of lowest
      * path value first) which haven't been checked (by having all their connecting nodes examined)

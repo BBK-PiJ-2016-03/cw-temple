@@ -42,6 +42,11 @@ public class CavernMapImpl implements CavernMap {
     }
 
     @Override
+    public int getConnectedNodesWeight(CavernNode start, CavernNode end) {
+        return 0;
+    }
+
+    @Override
     public List<NodeConnection> getConnectedNodes(CavernNode targetNode) throws IllegalArgumentException {
         if(!nodes.values().contains(targetNode))
             throw new IllegalArgumentException("Node not known in CavernMap");

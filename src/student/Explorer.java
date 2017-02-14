@@ -4,6 +4,8 @@ import game.EscapeState;
 import game.ExplorationState;
 import student.Maps.CavernMap;
 import student.Maps.CavernMapImpl;
+import student.Maps.EscapeCavernMap;
+import student.Maps.EscapeCavernMapImpl;
 import student.Navigators.DijkstraNavigator;
 import student.Navigators.Navigator;
 import student.Navigators.Seeker;
@@ -86,10 +88,10 @@ public class Explorer {
    */
   public void escape(EscapeState state) {
     //TODO: Escape from the cavern before time runs out
-      CavernMap map = new CavernMapImpl();
+      EscapeCavernMap map = new EscapeCavernMapImpl();
       Navigator navigator = new DijkstraNavigator(map);
 
-      Seeker seeker = new TargetSeeker(navigator, map);
+      //Seeker seeker = new TargetSeeker(navigator, map);
 
       convertVerticesToMap(state.getVertices(), map);
 
