@@ -70,10 +70,18 @@ public class DijkstraNavigatorTest {
     }
 
     @Test
-    public void getShortestDistanceToDestinationTest(){
+    public void getShortestDistanceToDestinationOneNodeTest(){
         nav.setStartNode(map.getNode(1L));
         nav.setDestinationNode(map.getNode(2L));
         int expected = 1;
+        assertEquals(expected, nav.getShortestDistanceToDestination());
+    }
+
+    @Test
+    public void getShortestDistanceToDestinationThreeNodesTest(){
+        nav.setStartNode(map.getNode(1L));
+        nav.setDestinationNode(map.getNode(4L));
+        int expected = 3;
         assertEquals(expected, nav.getShortestDistanceToDestination());
     }
 

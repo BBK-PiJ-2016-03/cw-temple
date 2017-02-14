@@ -90,10 +90,10 @@ public class Explorer {
     //TODO: Escape from the cavern before time runs out
       EscapeCavernMap map = new EscapeCavernMapImpl();
       Navigator navigator = new DijkstraNavigator(map);
-
       //Seeker seeker = new TargetSeeker(navigator, map);
-
       convertVerticesToMap(state.getVertices(), map);
+
+
 
       //add start
       //map.addNode(new CavernNodeImpl(state.getCurrentNode()));

@@ -104,7 +104,6 @@ public class TargetSeeker implements Seeker {
         return map.getAllNodes().stream()
                 .filter(n -> !n.isVisited())
                 .sorted(Comparator.comparingInt(n -> (n.getDistance() + getDistanceToNode(n))))
-                .peek(n -> System.out.println(n.getDistance()))
                 .findFirst()
                 .get();
     }

@@ -43,7 +43,11 @@ public class CavernMapImpl implements CavernMap {
 
     @Override
     public int getConnectedNodesWeight(CavernNode start, CavernNode end) {
-        return 0;
+        return connections.stream()
+                .filter(n -> n.getConnectedNodes().contains(start) && n.getConnectedNodes().contains(end))
+                .findFirst()
+                .map(n -> n.getWeight())
+                .get();
     }
 
     @Override

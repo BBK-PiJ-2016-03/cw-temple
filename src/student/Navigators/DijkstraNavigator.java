@@ -38,8 +38,7 @@ public class DijkstraNavigator implements Navigator {
 
     @Override
     public List<CavernNode> getPathFromStartToDestination() {
-        if(getStartNode() == null || getDestinationNode() == null)
-            throw new IllegalStateException("Start and destination nodes must be set before generating path");
+        checkStartAndDestinationSet();
 
         initialiseAllNodes();
         return getShortestPath(map.getAllNodes());
@@ -47,11 +46,16 @@ public class DijkstraNavigator implements Navigator {
 
     @Override
     public int getShortestDistanceToDestination() {
-        if(getStartNode() == null || getDestinationNode() == null)
-            throw new IllegalStateException("Start and destination nodes must be set before generating path");
+        checkStartAndDestinationSet();
+
         initialiseAllNodes();
         List<CavernNode> path = getShortestPath(map.getAllNodes());
         return getPathDistance(path);
+    }
+
+    private void checkStartAndDestinationSet() {
+        if(getStartNode() == null || getDestinationNode() == null)
+            throw new IllegalStateException("Start and destination nodes must be set before generating path");
     }
 
     /**
