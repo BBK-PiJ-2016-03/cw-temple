@@ -2,14 +2,12 @@ package student;
 
 import game.EscapeState;
 import game.ExplorationState;
+import game.Node;
 import student.Maps.CavernMap;
 import student.Maps.CavernMapImpl;
 import student.Maps.EscapeCavernMap;
 import student.Maps.EscapeCavernMapImpl;
-import student.Navigators.DijkstraNavigator;
-import student.Navigators.Navigator;
-import student.Navigators.Seeker;
-import student.Navigators.TargetSeeker;
+import student.Navigators.*;
 import student.Nodes.CavernNodeImpl;
 
 import static student.Maps.MapImport.convertVerticesToMap;
@@ -90,10 +88,18 @@ public class Explorer {
     //TODO: Escape from the cavern before time runs out
       EscapeCavernMap map = new EscapeCavernMapImpl();
       Navigator navigator = new DijkstraNavigator(map);
-      //Seeker seeker = new TargetSeeker(navigator, map);
+      GoldSeeker seeker = new GoldSeeker(navigator, map);
       convertVerticesToMap(state.getVertices(), map);
 
+      map.setExit(map.getNode(state.getExit().getId()));
 
+      while(state.getCurrentNode() != state.getExit()){
+          long move = seeker.getNextMove(state.getCurrentNode().getId());
+
+          Node dest = state.getVertices().stream().filter(n -> n.getId() == move).findFirst().get();
+
+          state.moveTo(dest);
+      }
 
       //add start
       //map.addNode(new CavernNodeImpl(state.getCurrentNode()));

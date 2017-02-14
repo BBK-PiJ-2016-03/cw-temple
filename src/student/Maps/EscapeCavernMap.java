@@ -21,4 +21,16 @@ public interface EscapeCavernMap extends CavernMap{
      * @return the amount of gold
      */
     int getNodeGold(CavernNode node);
+
+    /**
+     * setter for the exit node
+     * @param node
+     */
+    void setExit(CavernNode node);
+
+    /**
+     * getter for the exit node
+     * @return the exit node or null if not set
+     */
+    CavernNode getExit();
 }

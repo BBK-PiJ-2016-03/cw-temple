@@ -81,18 +81,8 @@ public class TargetSeeker implements Seeker {
     private long getNewPathToClosestAvailableNode() {
         navigator.setStartNode(map.getNode(this.currentLocationId));
         navigator.setDestinationNode(getClosestUnvisitedNodeOnMap());
-        setNewPath();
+        this.path = SeekerLibrary.setNewPath(this.navigator, this.currentLocationId);
         return getNextPathNodeId();
-    }
-
-    /**
-     * grabs the new path from the navigator, then removes the starting
-     * node if that is the current location
-     */
-    private void setNewPath() {
-        this.path = navigator.getPathFromStartToDestination();
-        if(this.path.get(0).getId() == currentLocationId)
-            this.path.remove(0);
     }
 
     /**
