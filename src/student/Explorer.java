@@ -91,8 +91,6 @@ public class Explorer {
       GoldSeeker seeker = new GoldSeeker(navigator, map);
       convertVerticesToMap(state.getVertices(), map);
 
-      navigator.setStartNode(map.getNode(state.getCurrentNode().getId()));
-      navigator.setDestinationNode(map.getNode(state.getExit().getId()));
       map.setExit(map.getNode(state.getExit().getId()));
 
 
@@ -101,23 +99,8 @@ public class Explorer {
             state.pickUpGold();
 
           long move = seeker.getNextMove(state.getCurrentNode().getId());
-          System.out.println("Move: "+move);
-
           Node dest = state.getVertices().stream().filter(n -> n.getId() == move).findFirst().get();
-          System.out.println("Location --");
-          System.out.println(state.getCurrentNode().getId());
-          System.out.println("Neighbours --");
-          state.getCurrentNode().getNeighbours().forEach(n -> System.out.println(n.getId()));
-          System.out.println("Destinatioon --");
-          System.out.println(dest.getId());
-
           state.moveTo(dest);
       }
-
-      //add start
-      //map.addNode(new CavernNodeImpl(state.getCurrentNode()));
-      //map.getNode(0).setVisited(true);
-
-      //state.
   }
 }

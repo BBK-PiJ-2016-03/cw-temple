@@ -29,8 +29,6 @@ public class GoldSeeker implements Seeker {
             throw new IllegalStateException("Node with that id not known");
 
         setCurrentLocationId(currentLocation);
-        System.out.println("CurrentLocation: "+currentLocation);
-        System.out.println(map.getConnectedNodes(map.getNode(currentLocation)));
 
         CavernNode location = map.getNode(currentLocation);
         return getNextNodeId(location);
@@ -64,7 +62,7 @@ public class GoldSeeker implements Seeker {
     private long getNextMoveFromNewPath() {
         navigator.setStartNode(map.getNode(this.currentLocationId));
         navigator.setDestinationNode(map.getExit());
-        this.path = SeekerLibrary.setNewPath(this.navigator, this.currentLocationId);
+        this.path = navigator.getPathFromStartToDestination();
         return getNextPathNodeId();
     }
 
