@@ -28,11 +28,11 @@ public class GoldSeeker implements Seeker {
         if(!map.contains(currentLocation))
             throw new IllegalStateException("Node with that id not known");
 
-        getNextMoveFromNewPath();
-
         setCurrentLocationId(currentLocation);
-        CavernNode location = map.getNode(currentLocation);
+        System.out.println("CurrentLocation: "+currentLocation);
+        System.out.println(map.getConnectedNodes(map.getNode(currentLocation)));
 
+        CavernNode location = map.getNode(currentLocation);
         return getNextNodeId(location);
     }
 

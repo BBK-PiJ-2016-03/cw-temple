@@ -29,4 +29,9 @@ public class NodeConnection {
     public void setPathWeight(int pathWeight) {
         this.pathWeight = pathWeight;
     }
+
+    @Override
+    public String toString(){
+        return "Id: "+node.getId()+" Weight: "+pathWeight;
+    }
 }

@@ -57,8 +57,8 @@ public class CavernMapImpl implements CavernMap {
 
         return connections.stream()
                 .filter(connection -> connection.getConnectedNodes().contains(targetNode))
-                .map(connection -> connection.getConnectedNode(targetNode))
                 .distinct()
+                .map(connection -> connection.getConnectedNode(targetNode))
                 .collect(Collectors.toList());
     }
 
