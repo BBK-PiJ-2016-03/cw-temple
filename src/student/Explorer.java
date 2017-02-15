@@ -95,8 +95,11 @@ public class Explorer {
       navigator.setDestinationNode(map.getNode(state.getExit().getId()));
       map.setExit(map.getNode(state.getExit().getId()));
 
+
       while(state.getCurrentNode() != state.getExit()){
-          state.pickUpGold();
+          if(state.getCurrentNode().getTile().getGold() > 0)
+            state.pickUpGold();
+
           long move = seeker.getNextMove(state.getCurrentNode().getId());
           System.out.println("Move: "+move);
 
