@@ -23,6 +23,16 @@ public class GoldSeeker implements Seeker {
         setMap(map);
     }
 
+    /**
+     * Overload to allow for calling the getNextMove without specifying any neighbouring nodes
+     * @param currentLocation
+     * @return the id of the next move
+     * @throws IllegalStateException
+     */
+    public long getNextMove(long currentLocation) throws IllegalStateException {
+        return getNextMove(currentLocation, new ArrayList<>());
+    }
+
     @Override
     public long getNextMove(long currentLocation, Collection<NodeStatus> neighbours) throws IllegalStateException {
         if(!map.contains(currentLocation))
@@ -64,6 +74,11 @@ public class GoldSeeker implements Seeker {
         return path.remove(0).getId();
     }
 
+    /**
+     * Set up the navigator start and destination and generate a new path between them.
+     * Store the path in the instance path variable.
+     * @return the id of the next node to move to
+     */
     private long getNextMoveFromNewPath() {
         navigator.setStartNode(map.getNode(this.currentLocationId));
         navigator.setDestinationNode(map.getExit());
@@ -71,9 +86,7 @@ public class GoldSeeker implements Seeker {
         return getNextPathNodeId();
     }
 
-    public long getNextMove(long currentLocation) throws IllegalStateException {
-        return getNextMove(currentLocation, new ArrayList<>());
-    }
+
 
     public void setNav(Navigator navigator) {
         this.navigator = navigator;
