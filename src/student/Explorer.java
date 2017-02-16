@@ -93,12 +93,14 @@ public class Explorer {
 
       map.setExit(map.getNode(state.getExit().getId()));
 
-
+      int noGold = 0;
       while(state.getCurrentNode() != state.getExit()){
-          if(state.getCurrentNode().getTile().getGold() > 0)
-            state.pickUpGold();
+          if(state.getCurrentNode().getTile().getGold() > noGold) {
+              state.pickUpGold();
+              map.setNodeGold(map.getNode(state.getCurrentNode().getId()), noGold);
+          }
 
-          long move = seeker.getNextMove(state.getCurrentNode().getId());
+          long move = seeker.getNextMove(state.getCurrentNode().getId(), state.getTimeRemaining());
           Node dest = state.getVertices().stream().filter(n -> n.getId() == move).findFirst().get();
           state.moveTo(dest);
       }
