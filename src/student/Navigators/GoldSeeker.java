@@ -34,9 +34,14 @@ public class GoldSeeker implements Seeker {
         return getNextNodeId(location);
     }
 
+    /**
+     * Determine whether to plot a new path or get the next move from the current one.
+     * @param location
+     * @return
+     */
     private long getNextNodeId(CavernNode location) {
         if(!pathExists())
-            getNextMoveFromNewPath();
+            return getNextMoveFromNewPath();
         return getNextPathNodeId();
 
     }
@@ -62,7 +67,7 @@ public class GoldSeeker implements Seeker {
     private long getNextMoveFromNewPath() {
         navigator.setStartNode(map.getNode(this.currentLocationId));
         navigator.setDestinationNode(map.getExit());
-        this.path = navigator.getPathFromStartToDestination();
+        this.path = SeekerLibrary.setNewPath(navigator, this.currentLocationId);
         return getNextPathNodeId();
     }
 
