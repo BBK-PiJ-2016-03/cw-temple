@@ -2,20 +2,29 @@ package student.Maps;
 
 import student.Nodes.CavernNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Alexander Worton on 13/02/2017.
  */
 public class EscapeCavernMapImpl extends CavernMapImpl implements EscapeCavernMap {
+
+    private Map<CavernNode, Integer> goldMap;
     private CavernNode exit;
+
+    {
+        goldMap = new HashMap<>();
+    }
 
     @Override
     public void setNodeGold(CavernNode node, int gold) throws IllegalArgumentException {
-
+        goldMap.put(node, gold);
     }
 
     @Override
     public int getNodeGold(CavernNode node) {
-        return 0;
+        return goldMap.get(node);
     }
 
     @Override
