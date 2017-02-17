@@ -17,7 +17,7 @@ public interface CavernNode{
      * @param pathValue the value to be set
      * @throws IllegalArgumentException if the argument provided is negative
      */
-    void setPathValue(int pathValue) throws IllegalArgumentException;
+    void setPathValue(int pathValue);
 
     /**
      * Getter for the node distance value
@@ -31,21 +31,21 @@ public interface CavernNode{
      * @param distance the value to be set
      * @throws IllegalArgumentException if the argument provided is negative
      */
-    void setDistance(int distance) throws IllegalArgumentException;
+    void setDistance(int distance);
 
     /**
      * Getter for the node id
      * @return id
      * @throws IllegalStateException if a valid id has not been set
      */
-    long getId() throws IllegalStateException;
+    long getId();
 
     /**
      * Setter for the node id
      * @param id the value to be set
      * @throws IllegalArgumentException if the argument provided is les than 1
      */
-    void setId(long id) throws IllegalArgumentException;
+    void setId(long id);
 
     /**
      * Getter for visited state

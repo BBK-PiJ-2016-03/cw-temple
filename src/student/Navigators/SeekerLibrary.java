@@ -20,8 +20,9 @@ final class SeekerLibrary {
      */
     public static List<CavernNode> setNewPath(Navigator navigator, long currentLocationId) {
         List<CavernNode> path = navigator.getPathFromStartToDestination();
-        if(path.get(0).getId() == currentLocationId)
+        if(path.get(0).getId() == currentLocationId) {
             path.remove(0);
+        }
         return path;
     }
 }

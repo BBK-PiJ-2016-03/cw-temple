@@ -19,22 +19,22 @@ public class EscapeCavernMapImpl extends CavernMapImpl implements EscapeCavernMa
     }
 
     @Override
-    public void setNodeGold(CavernNode node, int gold) throws IllegalArgumentException {
+    public final void setNodeGold(CavernNode node, int gold){
         goldMap.put(node, gold);
     }
 
     @Override
-    public int getNodeGold(CavernNode node) {
+    public final int getNodeGold(CavernNode node) {
         return goldMap.get(node);
     }
 
     @Override
-    public void setExit(CavernNode node) {
+    public final void setExit(CavernNode node) {
         this.exit = node;
     }
 
     @Override
-    public CavernNode getExit() {
+    public final CavernNode getExit() {
         return this.exit;
     }
 }

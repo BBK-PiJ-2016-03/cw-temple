@@ -10,17 +10,17 @@ public class NodeStatusNeighbourNode implements HasIdAndDistance {
 
     private final NodeStatus instance;
 
-    public NodeStatusNeighbourNode(NodeStatus instance) {
-        this.instance = instance;
+    public NodeStatusNeighbourNode(NodeStatus suppliedInstance) {
+        this.instance = suppliedInstance;
     }
 
     @Override
-    public long getId() {
+    public final long getId() {
         return instance.getId();
     }
 
     @Override
-    public int getDistance() {
+    public final int getDistance() {
         return instance.getDistanceToTarget();
     }
 }

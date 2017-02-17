@@ -14,7 +14,7 @@ public interface EscapeCavernMap extends CavernMap{
      * @param gold the amount of gold to be set at the location
      * @throws IllegalArgumentException if the node is unknown
      */
-    void setNodeGold(CavernNode node, int gold) throws IllegalArgumentException;
+    void setNodeGold(CavernNode node, int gold);
 
     /**
      * Getter for the gold stored at a location

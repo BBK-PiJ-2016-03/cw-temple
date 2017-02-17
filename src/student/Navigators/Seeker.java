@@ -14,7 +14,6 @@ public interface Seeker {
      * Getter for the next move to make
      * @param currentLocation the current location
      * @return the next move
-     * @throws IllegalStateException if the currentLocation is unknown
      */
-    long getNextMove(long currentLocation, Collection<? extends HasIdAndDistance> neighbours) throws IllegalStateException;
+    long getNextMove(long currentLocation, Collection<? extends HasIdAndDistance> neighbours);
 }

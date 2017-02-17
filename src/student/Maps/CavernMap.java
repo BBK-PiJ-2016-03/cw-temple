@@ -43,9 +43,8 @@ public interface CavernMap {
      *
      * @param node the source node
      * @return a list of nodeConnections connected to the supplied node. List is empty if no nodes are connected
-     * @throws IllegalArgumentException if the supplied node is unknown to the map
      */
-    List<NodeConnection> getConnectedNodes(CavernNode node) throws IllegalArgumentException;
+    List<NodeConnection> getConnectedNodes(CavernNode node);
 
     /**
      * Getter for all nodes

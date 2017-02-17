@@ -20,13 +20,13 @@ public class CavernNodeImpl implements CavernNode {
 
     public CavernNodeImpl(){}
 
-    public CavernNodeImpl(long id){
-        setId(id);
+    public CavernNodeImpl(long nodeId){
+        setId(nodeId);
     }
 
-    public CavernNodeImpl(long id, int distance){
-        setId(id);
-        setDistance(distance);
+    public CavernNodeImpl(long nodeId, int distanceToTarget){
+        setId(nodeId);
+        setDistance(distanceToTarget);
     }
 
     @Override
@@ -35,10 +35,11 @@ public class CavernNodeImpl implements CavernNode {
     }
 
     @Override
-    public final void setPathValue(int pathValue) {
-        if(pathValue < 0)
-            throw new IllegalArgumentException("Path values must be valid to be set. "+pathValue+" is invalid.");
-        this.pathValue = pathValue;
+    public final void setPathValue(int newPathValue) {
+        if(newPathValue < 0) {
+            throw new IllegalArgumentException("Path values must be valid to be set. " + newPathValue + " is invalid.");
+        }
+        this.pathValue = newPathValue;
     }
 
     @Override
@@ -47,24 +48,27 @@ public class CavernNodeImpl implements CavernNode {
     }
 
     @Override
-    public final void setDistance(int distance) throws IllegalArgumentException {
-        if(distance < 0)
+    public final void setDistance(int newDistance){
+        if(newDistance < 0) {
             throw new IllegalArgumentException("Distance cannot be negative");
-        this.distance = distance;
+        }
+        this.distance = newDistance;
     }
 
     @Override
     public final long getId() {
-        if(this.id < 0)
+        if(this.id < 0) {
             throw new IllegalStateException("Id has not yet been set for this node");
+        }
         return this.id;
     }
 
     @Override
-    public final void setId(long id) {
-        if(id < 0)
+    public final void setId(long newId) {
+        if(newId < 0) {
             throw new IllegalArgumentException("Provided Id is invalid. Please supply a positive id >= 0");
-        this.id = id;
+        }
+        this.id = newId;
     }
 
     @Override
@@ -73,14 +77,15 @@ public class CavernNodeImpl implements CavernNode {
     }
 
     @Override
-    public final void setVisited(Boolean visited) {
-        this.visited = visited;
+    public final void setVisited(Boolean newVisited) {
+        this.visited = newVisited;
     }
 
     @Override
     public final boolean equals(Object obj){
-        if(!(obj instanceof CavernNodeImpl))
+        if(!(obj instanceof CavernNodeImpl)) {
             return false;
+        }
 
         CavernNodeImpl cObj = (CavernNodeImpl)obj;
 

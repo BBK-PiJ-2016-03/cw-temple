@@ -1,7 +1,6 @@
 package student.Nodes;
 
 import game.Node;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Created by aworton on 17/02/17.
@@ -11,18 +10,18 @@ public class NodeNeighbourNode implements HasIdAndDistance {
 
     private final Node instance;
 
-    public NodeNeighbourNode(Node instance) {
-        this.instance = instance;
+    public NodeNeighbourNode(Node suppliedInstance) {
+        this.instance = suppliedInstance;
     }
 
     @Override
-    public long getId() {
+    public final long getId() {
         return instance.getId();
     }
 
     @Override
-    public int getDistance() {
+    public final int getDistance() {
         //this is bad, but so is a lack of covariant Collections.
-        throw new NotImplementedException();
+        throw new IllegalStateException("Node does not hold distance data");
     }
 }

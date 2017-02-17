@@ -10,29 +10,29 @@ public class NodeConnection {
     private CavernNode node;
     private int pathWeight;
 
-    public NodeConnection(CavernNode node, int pathWeight) {
-        setNode(node);
-        setPathWeight(pathWeight);
+    public NodeConnection(CavernNode suppliedNode, int suppliedPathWeight) {
+        setNode(suppliedNode);
+        setPathWeight(suppliedPathWeight);
     }
 
-    public CavernNode getNode() {
+    public final CavernNode getNode() {
         return node;
     }
 
-    private void setNode(CavernNode node) {
-        this.node = node;
+    private void setNode(CavernNode suppliedNode) {
+        this.node = suppliedNode;
     }
 
-    public int getPathWeight() {
+    public final int getPathWeight() {
         return pathWeight;
     }
 
-    private void setPathWeight(int pathWeight) {
-        this.pathWeight = pathWeight;
+    private void setPathWeight(int suppliedPathWeight) {
+        this.pathWeight = suppliedPathWeight;
     }
 
     @Override
-    public String toString(){
+    public final String toString(){
         return "Id: "+node.getId()+" Weight: "+pathWeight;
     }
 }
