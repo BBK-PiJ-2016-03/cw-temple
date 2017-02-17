@@ -7,6 +7,7 @@ public class GoldNode implements CavernNode {
 
     private CavernNode instance;
     private Integer gold;
+    private int goldDistanceWeight;
 
     public GoldNode(CavernNode instance) {
         this.instance = instance;

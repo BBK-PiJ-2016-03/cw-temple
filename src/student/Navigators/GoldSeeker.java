@@ -51,26 +51,23 @@ public class GoldSeeker implements Seeker {
     }
 
     /**
+     * check for immediate gold first, then fail over to pathing
      * Determine whether to plot a new path or get the next move from the current one.
      * @param location
      * @return
      */
     private long getNextNodeId(CavernNode location) {
-        if(!pathExists())
-            return getNextMoveLocalFirst();
-        return getNextPathNodeId();
-
-    }
-
-    /**
-     * check for immediate gold first, then fail over to pathing
-     * @return id of next node to move to
-     */
-    private long getNextMoveLocalFirst() {
         Long id = getIdOfLocalNodeHoldingGold();
-        if(id != null && getDistanceToExitViaNode(id) <= timeRemaining)
+        if(id != null && getDistanceToExitViaNode(id) <= timeRemaining) {
+            path = null;
             return id;
+        }
+
+        if(pathExists())
+            return getNextPathNodeId();
+
         return getNextMoveFromNewPath();
+
     }
 
     private Long getIdOfLocalNodeHoldingGold() {
@@ -114,8 +111,8 @@ public class GoldSeeker implements Seeker {
     }
 
     /**
-     * Get GoldNodes for map, sorted by Gold Descending.
-     * @return sorted list of GoldNodes, highest gold first
+     * Get GoldNodes for map, sorted by Gold Descending weighted with distance.
+     * @return sorted list of GoldNodes, highest gold / distance weight first
      */
     public List<GoldNode> getSortedGoldNodes() {
         return map.getAllNodes().stream()
@@ -164,6 +161,10 @@ public class GoldSeeker implements Seeker {
         int distanceToNode = getDistanceBetween(map.getNode(currentLocationId), map.getNode(waypoint));
         int distanceFromNode = getDistanceBetween(map.getNode(waypoint), map.getExit());
         return distanceToNode + distanceFromNode;
+    }
+
+    private int getDistanceTo(CavernNode node){
+        return getDistanceBetween(map.getNode(currentLocationId), node);
     }
 
     /**
