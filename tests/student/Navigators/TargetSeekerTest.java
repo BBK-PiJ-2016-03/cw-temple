@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import student.Maps.CavernMap;
 import student.Maps.CavernMapImpl;
+import student.Nodes.NodeLibrary;
+import student.Nodes.NodeStatusNeighbourNode;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +26,7 @@ public class TargetSeekerTest {
     private CavernMap map;
     private Navigator navigator;
     private Seeker seeker;
-    private Collection<NodeStatus> neighbours;
+    private Collection<NodeStatusNeighbourNode> neighbours;
 
     @Before
     public void before(){
@@ -32,7 +34,7 @@ public class TargetSeekerTest {
         navigator = new DijkstraNavigator(map);
         seeker = new TargetSeeker(navigator, map);
         populateCavern(map);
-        neighbours = getMockNeighbours(1);
+        neighbours = NodeLibrary.wrapGameNodeStatusCollection(getMockNeighbours(1));
     }
 
     @Test(expected=IllegalStateException.class)

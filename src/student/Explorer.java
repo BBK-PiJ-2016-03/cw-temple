@@ -9,6 +9,12 @@ import student.Maps.EscapeCavernMap;
 import student.Maps.EscapeCavernMapImpl;
 import student.Navigators.*;
 import student.Nodes.CavernNodeImpl;
+import student.Nodes.NodeLibrary;
+import student.Nodes.NodeNeighbourNode;
+import student.Nodes.NodeStatusNeighbourNode;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static student.Maps.MapImport.convertVerticesToMap;
 
@@ -56,7 +62,10 @@ public class Explorer {
     map.getNode(state.getCurrentLocation()).setVisited(true);
 
     while(state.getDistanceToTarget() > 0){
-        long move = seeker.getNextMove(state.getCurrentLocation(), state.getNeighbours());
+        //convert neighbours
+        List<NodeStatusNeighbourNode> neighbours = NodeLibrary.wrapGameNodeStatusCollection(state.getNeighbours());
+
+        long move = seeker.getNextMove(state.getCurrentLocation(), neighbours);
         state.moveTo(move);
     }
   }
@@ -100,7 +109,10 @@ public class Explorer {
               map.setNodeGold(map.getNode(state.getCurrentNode().getId()), noGold);
           }
 
-          long move = seeker.getNextMove(state.getCurrentNode().getId(), state.getTimeRemaining());
+          //convert neighbours
+          List<NodeNeighbourNode> neighbours = NodeLibrary.wrapGameNodeCollection(state.getCurrentNode().getNeighbours());
+
+          long move = seeker.getNextMove(state.getCurrentNode().getId(), neighbours, state.getTimeRemaining());
           Node dest = state.getVertices().stream().filter(n -> n.getId() == move).findFirst().get();
           state.moveTo(dest);
       }

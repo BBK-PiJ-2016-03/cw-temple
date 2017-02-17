@@ -1,9 +1,9 @@
 package student.Navigators;
 
-import game.NodeStatus;
 import student.Maps.CavernMap;
 import student.Nodes.CavernNode;
 import student.Nodes.CavernNodeImpl;
+import student.Nodes.HasIdAndDistance;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -25,9 +25,10 @@ public class TargetSeeker implements Seeker {
     }
 
     @Override
-    public long getNextMove(long location, Collection<NodeStatus> neighbours) {
+    public long getNextMove(long location, Collection<? extends HasIdAndDistance> neighbours) {
         if(!map.contains(location))
             throw new IllegalStateException("Node with that id not known");
+
         setCurrentLocationId(location);
         CavernNode currentLocation = map.getNode(location);
         addNeighboursToMap(currentLocation, neighbours);
@@ -39,7 +40,7 @@ public class TargetSeeker implements Seeker {
      * to the next closest unexplored node in map
      * @return next closest node to target
      */
-    private long getNextClosestNodeId(Collection<NodeStatus> neighbours) {
+    private long getNextClosestNodeId(Collection<? extends HasIdAndDistance> neighbours) {
         if(pathExists())
             return getNextPathNodeId();
         return getNextNodeId(neighbours);
@@ -51,7 +52,7 @@ public class TargetSeeker implements Seeker {
      * @param neighbours of the current location
      * @return the id of the next node to visit
      */
-    private long getNextNodeId(Collection<NodeStatus> neighbours) {
+    private long getNextNodeId(Collection<? extends HasIdAndDistance> neighbours) {
         Long nextNodeId = getClosestNeighbourNode(neighbours);
         if(nextNodeId == null) {
             nextNodeId = getNewPathToClosestAvailableNode();
@@ -64,9 +65,9 @@ public class TargetSeeker implements Seeker {
      * @param neighbours
      * @return id of closest node to target, null if none exists
      */
-    private Long getClosestNeighbourNode(Collection<NodeStatus> neighbours){
+    private Long getClosestNeighbourNode(Collection<? extends HasIdAndDistance> neighbours){
         return neighbours.stream()
-                .sorted(Comparator.comparingInt(n -> n.getDistanceToTarget()))
+                .sorted(Comparator.comparingInt(n -> n.getDistance()))
                 .map(n -> map.getNode(n.getId()))
                 .filter(n -> !n.isVisited())
                 .findFirst()
@@ -109,9 +110,9 @@ public class TargetSeeker implements Seeker {
      * @param currentLocation the current location
      * @param neighbours the neighbouring nodes
      */
-    private void addNeighboursToMap(CavernNode currentLocation, Collection<NodeStatus> neighbours) {
+    private void addNeighboursToMap(CavernNode currentLocation, Collection<? extends HasIdAndDistance> neighbours) {
         neighbours.forEach(n -> {
-            CavernNode node = addToOrGetExistingNodeFromMap(n);
+            CavernNode node = addToOrGetExistingNodeFromMap(n.getId(), n.getDistance());
             map.connectNodes(currentLocation, node);
         });
     }
@@ -119,16 +120,17 @@ public class TargetSeeker implements Seeker {
     /**
      * Check that a node with the id is in the map, if so, return it
      * otherwise add a new node to the map and return that.
-     * @param n a nodestatus object received from the game.
+     * @param id the id of a node
+     * @param distance the distance to target
      * @return node from map
      */
-    private CavernNode addToOrGetExistingNodeFromMap(NodeStatus n) {
-        if(!map.contains(n.getId())) {
-            CavernNode node = new CavernNodeImpl(n.getId());
-            node.setDistance(n.getDistanceToTarget());
+    private CavernNode addToOrGetExistingNodeFromMap(long id, int distance) {
+        if(!map.contains(id)) {
+            CavernNode node = new CavernNodeImpl(id);
+            node.setDistance(distance);
             map.addNode(node);
         }
-        return map.getNode(n.getId());
+        return map.getNode(id);
     }
 
     public Navigator getNavigator() {

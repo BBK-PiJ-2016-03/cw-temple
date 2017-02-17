@@ -1,6 +1,6 @@
 package student.Navigators;
 
-import game.NodeStatus;
+import student.Nodes.HasIdAndDistance;
 
 import java.util.Collection;
 
@@ -15,5 +15,5 @@ public interface Seeker {
      * @return the next move
      * @throws IllegalStateException if the currentLocation is unknown
      */
-    long getNextMove(long currentLocation, Collection<NodeStatus> neighbours) throws IllegalStateException;
+    long getNextMove(long currentLocation, Collection<? extends HasIdAndDistance> neighbours) throws IllegalStateException;
 }

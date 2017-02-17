@@ -1,13 +1,12 @@
 package student.Navigators;
 
-import game.NodeStatus;
+import student.DataObjects.NodeConnection;
 import student.Maps.EscapeCavernMap;
 import student.Nodes.CavernNode;
 import student.Nodes.GoldNode;
+import student.Nodes.HasIdAndDistance;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,16 +29,18 @@ public class GoldSeeker implements Seeker {
     /**
      * Overload to allow for calling the getNextMove without specifying any neighbouring nodes
      * @param currentLocation
+     * @param neighbours
+     * @param timeRemaining
      * @return the id of the next move
      * @throws IllegalStateException
      */
-    public long getNextMove(long currentLocation, int timeRemaining) throws IllegalStateException {
+    public long getNextMove(long currentLocation, Collection<? extends HasIdAndDistance> neighbours, int timeRemaining) throws IllegalStateException {
         setTimeRemaining(timeRemaining);
-        return getNextMove(currentLocation, new ArrayList<>());
+        return getNextMove(currentLocation, neighbours);
     }
 
     @Override
-    public long getNextMove(long currentLocation, Collection<NodeStatus> neighbours) throws IllegalStateException {
+    public long getNextMove(long currentLocation, Collection<? extends HasIdAndDistance> neighbours) throws IllegalStateException {
         if(!map.contains(currentLocation))
             throw new IllegalStateException("Node with that id not known");
 
@@ -56,9 +57,32 @@ public class GoldSeeker implements Seeker {
      */
     private long getNextNodeId(CavernNode location) {
         if(!pathExists())
-            return getNextMoveFromNewPath();
+            return getNextMoveLocalFirst();
         return getNextPathNodeId();
 
+    }
+
+    /**
+     * check for immediate gold first, then fail over to pathing
+     * @return id of next node to move to
+     */
+    private long getNextMoveLocalFirst() {
+        Long id = getIdOfLocalNodeHoldingGold();
+        if(id != null && getDistanceToExitViaNode(id) <= timeRemaining)
+            return id;
+        return getNextMoveFromNewPath();
+    }
+
+    private Long getIdOfLocalNodeHoldingGold() {
+        List<Long> localNodeIds = map.getConnectedNodes(map.getNode(currentLocationId)).stream()
+                .map(connection -> connection.getNode().getId())
+                .collect(Collectors.toList());
+
+        return getSortedGoldNodes().stream()
+                .filter(n -> localNodeIds.contains(n.getId()))
+                .map(goldNode -> goldNode.getId())
+                .findFirst()
+                .orElse(null);
     }
 
     /**
