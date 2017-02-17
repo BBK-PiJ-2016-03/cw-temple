@@ -10,9 +10,10 @@ import static org.junit.Assert.*;
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
+@SuppressWarnings("ALL")
 public class CavernNodeImplTest {
     private CavernNode node;
-    private Random rand;
+    private final Random rand;
 
     {
         rand = new Random();

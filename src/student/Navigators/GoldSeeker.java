@@ -1,6 +1,5 @@
 package student.Navigators;
 
-import student.DataObjects.NodeConnection;
 import student.Maps.EscapeCavernMap;
 import student.Nodes.CavernNode;
 import student.Nodes.GoldNode;
@@ -13,6 +12,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Alexander Worton on 14/02/2017.
  */
+@SuppressWarnings("ALL")
 public class GoldSeeker implements Seeker {
 
     private Navigator navigator;
@@ -28,11 +28,11 @@ public class GoldSeeker implements Seeker {
 
     /**
      * Overload to allow for calling the getNextMove without specifying any neighbouring nodes
-     * @param currentLocation
-     * @param neighbours
-     * @param timeRemaining
+     * @param currentLocation the current location id
+     * @param neighbours the neighbouring nodes of the current location
+     * @param timeRemaining the remaining 'time' to escape
      * @return the id of the next move
-     * @throws IllegalStateException
+     * @throws IllegalStateException if the map doesn't contain the current location
      */
     public long getNextMove(long currentLocation, Collection<? extends HasIdAndDistance> neighbours, int timeRemaining) throws IllegalStateException {
         setTimeRemaining(timeRemaining);
@@ -45,18 +45,15 @@ public class GoldSeeker implements Seeker {
             throw new IllegalStateException("Node with that id not known");
 
         setCurrentLocationId(currentLocation);
-
-        CavernNode location = map.getNode(currentLocation);
-        return getNextNodeId(location);
+        return getNextNodeId();
     }
 
     /**
      * check for immediate gold first, then fail over to pathing
      * Determine whether to plot a new path or get the next move from the current one.
-     * @param location
-     * @return
+     * @return the id of the next node to move to
      */
-    private long getNextNodeId(CavernNode location) {
+    private long getNextNodeId() {
         Long id = getIdOfLocalNodeHoldingGold();
         if(id != null && getDistanceToExitViaNode(id) <= timeRemaining) {
             path = null;
@@ -77,7 +74,7 @@ public class GoldSeeker implements Seeker {
 
         return getSortedGoldNodes().stream()
                 .filter(n -> localNodeIds.contains(n.getId()))
-                .map(goldNode -> goldNode.getId())
+                .map(GoldNode::getId)
                 .findFirst()
                 .orElse(null);
     }
@@ -105,7 +102,7 @@ public class GoldSeeker implements Seeker {
      * Store the path in the instance path variable.
      * @return the id of the next node to move to.
      */
-    private long getNextMoveFromNewPath() {
+    private Long getNextMoveFromNewPath() {
         generateGoldGrabbingPath(getSortedGoldNodes());
         return getNextPathNodeId();
     }
@@ -114,7 +111,7 @@ public class GoldSeeker implements Seeker {
      * Get GoldNodes for map, sorted by Gold Descending weighted with distance.
      * @return sorted list of GoldNodes, highest gold / distance weight first
      */
-    public List<GoldNode> getSortedGoldNodes() {
+    private List<GoldNode> getSortedGoldNodes() {
         return map.getAllNodes().stream()
                 .map(n -> {
                     GoldNode node = new GoldNode(n);
@@ -163,14 +160,10 @@ public class GoldSeeker implements Seeker {
         return distanceToNode + distanceFromNode;
     }
 
-    private int getDistanceTo(CavernNode node){
-        return getDistanceBetween(map.getNode(currentLocationId), node);
-    }
-
     /**
      * Get the distance between the specified nodes
-     * @param node1
-     * @param node2
+     * @param node1 the first specified node
+     * @param node2 the second specified node
      * @return distance
      */
     private int getDistanceBetween(CavernNode node1, CavernNode node2) {
@@ -181,8 +174,8 @@ public class GoldSeeker implements Seeker {
 
     /**
      * Setter for pathing from and to locations
-     * @param startId
-     * @param destinationId
+     * @param startId the start node id
+     * @param destinationId the destination node id
      */
     private void setNewPath(long startId, long destinationId){
         navigator.setStartNode(map.getNode(startId));
@@ -192,11 +185,11 @@ public class GoldSeeker implements Seeker {
 
 
 
-    public void setNav(Navigator navigator) {
+    private void setNav(Navigator navigator) {
         this.navigator = navigator;
     }
 
-    public void setMap(EscapeCavernMap map) {
+    private void setMap(EscapeCavernMap map) {
         this.map = map;
     }
 

@@ -6,9 +6,10 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 /**
  * Created by aworton on 17/02/17.
  */
+@SuppressWarnings("ALL")
 public class NodeNeighbourNode implements HasIdAndDistance {
 
-    private Node instance;
+    private final Node instance;
 
     public NodeNeighbourNode(Node instance) {
         this.instance = instance;

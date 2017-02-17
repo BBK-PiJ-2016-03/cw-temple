@@ -14,7 +14,6 @@ import student.Nodes.NodeNeighbourNode;
 import student.Nodes.NodeStatusNeighbourNode;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static student.Maps.MapImport.convertVerticesToMap;
 
@@ -113,7 +112,7 @@ public class Explorer {
           List<NodeNeighbourNode> neighbours = NodeLibrary.wrapGameNodeCollection(state.getCurrentNode().getNeighbours());
 
           long move = seeker.getNextMove(state.getCurrentNode().getId(), neighbours, state.getTimeRemaining());
-          Node dest = state.getVertices().stream().filter(n -> n.getId() == move).findFirst().get();
+          Node dest = state.getVertices().stream().filter(n -> n.getId() == move).findFirst().orElse(null);
           state.moveTo(dest);
       }
   }

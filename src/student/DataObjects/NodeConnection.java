@@ -5,6 +5,7 @@ import student.Nodes.CavernNode;
 /**
  * Created by Alexander Worton on 13/02/2017.
  */
+@SuppressWarnings("ALL")
 public class NodeConnection {
     private CavernNode node;
     private int pathWeight;
@@ -18,7 +19,7 @@ public class NodeConnection {
         return node;
     }
 
-    public void setNode(CavernNode node) {
+    private void setNode(CavernNode node) {
         this.node = node;
     }
 
@@ -26,7 +27,7 @@ public class NodeConnection {
         return pathWeight;
     }
 
-    public void setPathWeight(int pathWeight) {
+    private void setPathWeight(int pathWeight) {
         this.pathWeight = pathWeight;
     }
 

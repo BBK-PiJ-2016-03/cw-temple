@@ -5,6 +5,7 @@ import student.Nodes.CavernNode;
 /**
  * Created by Alexander Worton on 13/02/2017.
  */
+@SuppressWarnings("ALL")
 public interface EscapeCavernMap extends CavernMap{
 
     /**
@@ -24,7 +25,7 @@ public interface EscapeCavernMap extends CavernMap{
 
     /**
      * setter for the exit node
-     * @param node
+     * @param node the node value to be set
      */
     void setExit(CavernNode node);
 

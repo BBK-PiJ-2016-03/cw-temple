@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by Alexander Worton on 06/02/2017.
  */
+@SuppressWarnings("ALL")
 public class TargetSeeker implements Seeker {
 
     private Navigator navigator;
@@ -40,7 +41,7 @@ public class TargetSeeker implements Seeker {
      * to the next closest unexplored node in map
      * @return next closest node to target
      */
-    private long getNextClosestNodeId(Collection<? extends HasIdAndDistance> neighbours) {
+    private Long getNextClosestNodeId(Collection<? extends HasIdAndDistance> neighbours) {
         if(pathExists())
             return getNextPathNodeId();
         return getNextNodeId(neighbours);
@@ -62,16 +63,16 @@ public class TargetSeeker implements Seeker {
 
     /**
      * Retrieve the neighbouring node which is closest to the target node
-     * @param neighbours
+     * @param neighbours the set of nodes to examine
      * @return id of closest node to target, null if none exists
      */
     private Long getClosestNeighbourNode(Collection<? extends HasIdAndDistance> neighbours){
         return neighbours.stream()
-                .sorted(Comparator.comparingInt(n -> n.getDistance()))
+                .sorted(Comparator.comparingInt(HasIdAndDistance::getDistance))
                 .map(n -> map.getNode(n.getId()))
                 .filter(n -> !n.isVisited())
                 .findFirst()
-                .map(n -> n.getId())
+                .map(CavernNode::getId)
                 .orElse(null);
     }
 
@@ -79,7 +80,7 @@ public class TargetSeeker implements Seeker {
      * generate a path/route to the closest known node to the target
      * @return the id of the first node to move to from the current node
      */
-    private long getNewPathToClosestAvailableNode() {
+    private Long getNewPathToClosestAvailableNode() {
         navigator.setStartNode(map.getNode(this.currentLocationId));
         navigator.setDestinationNode(getClosestUnvisitedNodeOnMap());
         this.path = SeekerLibrary.setNewPath(this.navigator, this.currentLocationId);
@@ -96,7 +97,7 @@ public class TargetSeeker implements Seeker {
                 .filter(n -> !n.isVisited())
                 .sorted(Comparator.comparingInt(n -> (n.getDistance() + getDistanceToNode(n))))
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     private int getDistanceToNode(CavernNode n) {
@@ -133,19 +134,11 @@ public class TargetSeeker implements Seeker {
         return map.getNode(id);
     }
 
-    public Navigator getNavigator() {
-        return this.navigator;
-    }
-
-    public void setNav(Navigator nav) {
+    private void setNav(Navigator nav) {
         this.navigator = nav;
     }
 
-    public CavernMap getMap() {
-        return this.map;
-    }
-
-    public void setMap(CavernMap map) {
+    private void setMap(CavernMap map) {
         this.map = map;
     }
 
@@ -169,9 +162,9 @@ public class TargetSeeker implements Seeker {
 
     /**
      * Set the currentLocation and mark it as visited.
-     * @param currentLocationId
+     * @param currentLocationId the id of the current location
      */
-    public void setCurrentLocationId(long currentLocationId) {
+    private void setCurrentLocationId(long currentLocationId) {
         this.currentLocationId = currentLocationId;
         map.getNode(currentLocationId).setVisited(true);
     }

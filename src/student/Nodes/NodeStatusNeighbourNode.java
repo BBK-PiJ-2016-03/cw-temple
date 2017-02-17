@@ -5,9 +5,10 @@ import game.NodeStatus;
 /**
  * Created by aworton on 16/02/17.
  */
+@SuppressWarnings("ALL")
 public class NodeStatusNeighbourNode implements HasIdAndDistance {
 
-    private NodeStatus instance;
+    private final NodeStatus instance;
 
     public NodeStatusNeighbourNode(NodeStatus instance) {
         this.instance = instance;

@@ -3,11 +3,11 @@ package student.Nodes;
 /**
  * Created by aworton on 16/02/17.
  */
+@SuppressWarnings("ALL")
 public class GoldNode implements CavernNode {
 
-    private CavernNode instance;
+    private final CavernNode instance;
     private Integer gold;
-    private int goldDistanceWeight;
 
     public GoldNode(CavernNode instance) {
         this.instance = instance;

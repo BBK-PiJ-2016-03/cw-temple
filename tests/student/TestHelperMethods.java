@@ -13,7 +13,12 @@ import java.util.Collection;
 /**
  * Created by Alexander Worton on 06/02/2017.
  */
+@SuppressWarnings("ALL")
 public class TestHelperMethods {
+
+    private TestHelperMethods(){
+
+    }
 
     public static void populateCavern(CavernMap map) {
         for(int i = 1; i <= 50; i++){
@@ -25,7 +30,7 @@ public class TestHelperMethods {
         map.connectNodes(map.getNode(4), map.getNode(50));
     }
 
-    public static CavernNode generateNode(int id) {
+    private static CavernNode generateNode(int id) {
         CavernNode node = new CavernNodeImpl();
         node.setId(id);
         return node;
@@ -55,13 +60,7 @@ public class TestHelperMethods {
                 //use instantiated object
                 neighbours.add((NodeStatus)nodeStatusConstructor.newInstance(constructorArgs));
             }
-            catch(InstantiationException e){
-                e.printStackTrace();
-            }
-            catch(IllegalAccessException e){
-                e.printStackTrace();
-            }
-            catch(InvocationTargetException e){
+            catch(InstantiationException | IllegalAccessException | InvocationTargetException e){
                 e.printStackTrace();
             }
         }

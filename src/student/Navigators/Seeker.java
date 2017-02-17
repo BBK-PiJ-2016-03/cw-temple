@@ -7,6 +7,7 @@ import java.util.Collection;
 /**
  * Created by Alexander Worton on 06/02/2017.
  */
+@SuppressWarnings("ALL")
 public interface Seeker {
 
     /**

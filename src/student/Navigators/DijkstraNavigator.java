@@ -75,7 +75,7 @@ public class DijkstraNavigator implements Navigator {
      * This is the driving method for obtaining the shortest path. Nodes (in order of lowest
      * path value first) which haven't been checked (by having all their connecting nodes examined)
      * are held in a list and popped off when checking is completed.
-     * @param allNodes
+     * @param allNodes the collection of all known nodes
      * @return the (a) shortest route from start to destination, start at index 0.
      */
     private List<CavernNode> getShortestPath(List<CavernNode> allNodes) {
@@ -109,14 +109,14 @@ public class DijkstraNavigator implements Navigator {
     /**
      * This locates the neighbouring connected node with the lowest value
      * to become the next node in the return path to the start
-     * @param currentNode
-     * @return
+     * @param currentNode the source node
+     * @return the Lowest path value neighbour of the source node
      */
     private NodeConnection getLowestPathValueNeighbour(CavernNode currentNode) {
         return map.getConnectedNodes(currentNode).stream()
                 .sorted(Comparator.comparingInt(e -> e.getNode().getPathValue()))
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     /**
@@ -141,7 +141,7 @@ public class DijkstraNavigator implements Navigator {
      */
     private CavernNode getLowestPathValuePendingNode() {
         nodesPendingProcessing = nodesPendingProcessing.stream()
-                .sorted(Comparator.comparingInt(e -> e.getPathValue()))
+                .sorted(Comparator.comparingInt(CavernNode::getPathValue))
                 .collect(Collectors.toList());
 
         return nodesPendingProcessing.remove(0);
@@ -151,7 +151,7 @@ public class DijkstraNavigator implements Navigator {
      * set the initial state of all nodes.
      * - All path values to be set to max, except the start node path value which is set to 0
      */
-    protected void initialiseAllNodes() {
+    void initialiseAllNodes() {
         map.getAllNodes().forEach(e -> {
             if(e.equals(startNode))
                 e.setPathValue(0);

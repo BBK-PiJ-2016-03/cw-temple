@@ -1,6 +1,5 @@
 package student.Navigators;
 
-import game.NodeStatus;
 import org.junit.Before;
 import org.junit.Test;
 import student.Maps.CavernMap;
@@ -21,24 +20,24 @@ import static student.TestHelperMethods.populateCavern;
 /**
  * Created by Alexander Worton on 06/02/2017.
  */
+@SuppressWarnings("ALL")
 public class TargetSeekerTest {
 
     private CavernMap map;
-    private Navigator navigator;
     private Seeker seeker;
     private Collection<NodeStatusNeighbourNode> neighbours;
 
     @Before
     public void before(){
         map = new CavernMapImpl();
-        navigator = new DijkstraNavigator(map);
+        Navigator navigator = new DijkstraNavigator(map);
         seeker = new TargetSeeker(navigator, map);
         populateCavern(map);
         neighbours = NodeLibrary.wrapGameNodeStatusCollection(getMockNeighbours(1));
     }
 
     @Test(expected=IllegalStateException.class)
-    public void getNextMoveUnknownLocation() throws Exception {
+    public void getNextMoveUnknownLocation(){
         seeker.getNextMove(99999999L, neighbours);
     }
 

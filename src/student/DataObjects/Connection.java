@@ -9,6 +9,7 @@ import java.util.Set;
 /**
  * Created by Alexander Worton on 13/02/2017.
  */
+@SuppressWarnings("ALL")
 public class Connection {
     private Set<CavernNode> connectedNodes;
     private int weight;
@@ -18,16 +19,11 @@ public class Connection {
         setWeight(weight);
     }
 
-    public Connection(CavernNode... nodes){
-        setConnectedNodes(nodes);
-        setWeight(1);
-    }
-
     public int getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    private void setWeight(int weight) {
         this.weight = weight;
     }
 
@@ -35,7 +31,7 @@ public class Connection {
         return connectedNodes;
     }
 
-    public void setConnectedNodes(CavernNode[] nodes) {
+    private void setConnectedNodes(CavernNode[] nodes) {
         if(nodes[0] != null && nodes[1] != null)
             this.connectedNodes = new HashSet<>(Arrays.asList(nodes));
     }
@@ -45,7 +41,7 @@ public class Connection {
                 .filter(n -> !n.equals(node))
                 .map(n -> new NodeConnection(n, this.weight))
                 .findFirst()
-                .get();
+                .orElse(null);
     }
 
     @Override
@@ -53,10 +49,7 @@ public class Connection {
         if(obj.getClass() != this.getClass())
             return false;
 
-        if(!this.connectedNodes.equals(((Connection)obj).connectedNodes))
-            return false;
-
-        return true;
+        return this.connectedNodes.equals(((Connection)obj).connectedNodes);
     }
 
     @Override

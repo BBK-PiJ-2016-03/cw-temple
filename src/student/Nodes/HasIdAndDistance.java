@@ -3,6 +3,7 @@ package student.Nodes;
 /**
  * Created by aworton on 16/02/17.
  */
+@SuppressWarnings("ALL")
 public interface HasIdAndDistance{
 
     /**

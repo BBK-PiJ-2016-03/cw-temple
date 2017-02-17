@@ -16,6 +16,7 @@ import static student.TestHelperMethods.populateCavern;
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
+@SuppressWarnings("ALL")
 public class DijkstraNavigatorTest {
 
     private CavernMap map;
@@ -95,9 +96,7 @@ public class DijkstraNavigatorTest {
     }
 
     private void setAllNodesUninitialised() {
-        map.getAllNodes().forEach(e -> {
-            e.setPathValue(5);
-        });
+        map.getAllNodes().forEach(e -> e.setPathValue(5));
     }
 
 }

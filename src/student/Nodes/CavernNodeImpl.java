@@ -3,9 +3,10 @@ package student.Nodes;
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
+@SuppressWarnings("ALL")
 public class CavernNodeImpl implements CavernNode {
 
-    long id;
+    private long id;
     private int pathValue;
     private Boolean visited;
     private int distance;
@@ -29,55 +30,55 @@ public class CavernNodeImpl implements CavernNode {
     }
 
     @Override
-    public int getPathValue() {
+    public final int getPathValue() {
         return this.pathValue;
     }
 
     @Override
-    public void setPathValue(int pathValue) {
+    public final void setPathValue(int pathValue) {
         if(pathValue < 0)
             throw new IllegalArgumentException("Path values must be valid to be set. "+pathValue+" is invalid.");
         this.pathValue = pathValue;
     }
 
     @Override
-    public int getDistance() {
+    public final int getDistance() {
         return this.distance;
     }
 
     @Override
-    public void setDistance(int distance) throws IllegalArgumentException {
+    public final void setDistance(int distance) throws IllegalArgumentException {
         if(distance < 0)
             throw new IllegalArgumentException("Distance cannot be negative");
         this.distance = distance;
     }
 
     @Override
-    public long getId() {
+    public final long getId() {
         if(this.id < 0)
             throw new IllegalStateException("Id has not yet been set for this node");
         return this.id;
     }
 
     @Override
-    public void setId(long id) {
+    public final void setId(long id) {
         if(id < 0)
             throw new IllegalArgumentException("Provided Id is invalid. Please supply a positive id >= 0");
         this.id = id;
     }
 
     @Override
-    public Boolean isVisited() {
+    public final Boolean isVisited() {
         return this.visited;
     }
 
     @Override
-    public void setVisited(Boolean visited) {
+    public final void setVisited(Boolean visited) {
         this.visited = visited;
     }
 
     @Override
-    public boolean equals(Object obj){
+    public final boolean equals(Object obj){
         if(!(obj instanceof CavernNodeImpl))
             return false;
 
@@ -89,19 +90,12 @@ public class CavernNodeImpl implements CavernNode {
     }
 
     @Override
-    public int hashCode(){
+    public final int hashCode(){
         return (int)(this.id % Integer.MAX_VALUE);
     }
 
     @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("Id: ");
-        sb.append(id);
-        sb.append(" pv: ");
-        sb.append(pathValue);
-        sb.append(" dist: ");
-        sb.append(distance);
-        return sb.toString();
+    public final String toString(){
+        return "Id: " + id + " pv: " + pathValue + " dist: " + distance;
     }
 }

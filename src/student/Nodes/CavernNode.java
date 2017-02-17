@@ -3,6 +3,7 @@ package student.Nodes;
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
+@SuppressWarnings("ALL")
 public interface CavernNode{
     /**
      * Getter for the node path value
@@ -13,7 +14,7 @@ public interface CavernNode{
     /**
      * Setter for the node path value
      * This should be set to the max value (in place of infinity) by default
-     * @param pathValue
+     * @param pathValue the value to be set
      * @throws IllegalArgumentException if the argument provided is negative
      */
     void setPathValue(int pathValue) throws IllegalArgumentException;
@@ -27,7 +28,7 @@ public interface CavernNode{
     /**
      * Setter for the node distance value
      * This should be set to the max value by default
-     * @param distance
+     * @param distance the value to be set
      * @throws IllegalArgumentException if the argument provided is negative
      */
     void setDistance(int distance) throws IllegalArgumentException;
@@ -41,10 +42,10 @@ public interface CavernNode{
 
     /**
      * Setter for the node id
-     * @param pathValue
+     * @param id the value to be set
      * @throws IllegalArgumentException if the argument provided is les than 1
      */
-    void setId(long pathValue) throws IllegalArgumentException;
+    void setId(long id) throws IllegalArgumentException;
 
     /**
      * Getter for visited state

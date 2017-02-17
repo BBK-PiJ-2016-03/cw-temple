@@ -7,7 +7,12 @@ import java.util.List;
 /**
  * Created by Alexander Worton on 14/02/2017.
  */
-public class SeekerLibrary {
+@SuppressWarnings("ALL")
+final class SeekerLibrary {
+
+    private SeekerLibrary(){
+
+    }
 
     /**
      * grabs the new path from the navigator, then removes the starting

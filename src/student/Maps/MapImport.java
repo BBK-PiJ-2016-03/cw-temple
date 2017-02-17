@@ -8,6 +8,7 @@ import java.util.Collection;
 /**
  * Created by Alexander Worton on 13/02/2017.
  */
+@SuppressWarnings("ALL")
 public class MapImport {
     /**
      * Conversion function to parse map data supplied by game into student implemented map

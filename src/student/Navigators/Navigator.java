@@ -7,16 +7,17 @@ import java.util.List;
 /**
  * Created by Alexander Worton on 02/02/2017.
  */
+@SuppressWarnings("ALL")
 public interface Navigator {
     /**
      * set starting node
-     * @param node
+     * @param node the start node to be set
      */
     void setStartNode(CavernNode node);
 
     /**
      * set destination node
-     * @param node
+     * @param node the destination node to be set
      */
     void setDestinationNode(CavernNode node);
 

@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 /**
  * Created by aworton on 16/02/17.
  */
+@SuppressWarnings("ALL")
 public class EscapeCavernMapImplTest {
 
     private EscapeCavernMap map;
@@ -23,7 +24,7 @@ public class EscapeCavernMapImplTest {
     }
 
     @Test
-    public void setNodeGold() throws Exception {
+    public void setNodeGold(){
         CavernNode node = map.getNode(1);
         int gold = 5;
         map.setNodeGold(node, gold);
@@ -31,7 +32,7 @@ public class EscapeCavernMapImplTest {
     }
 
     @Test
-    public void getNodeGold() throws Exception {
+    public void getNodeGold(){
         CavernNode node = map.getNode(1);
         for(int gold = 0; gold < 100; gold++){
             map.setNodeGold(node, gold);
@@ -41,7 +42,7 @@ public class EscapeCavernMapImplTest {
     }
 
     @Test
-    public void setGetExit() throws Exception {
+    public void setGetExit(){
         for(long nodeId = 1; nodeId <=3; nodeId++){
             CavernNode node = map.getNode(nodeId);
             map.setExit(node);

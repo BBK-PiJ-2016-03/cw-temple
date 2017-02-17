@@ -13,10 +13,11 @@ import java.util.stream.Collectors;
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
+@SuppressWarnings("ALL")
 public class CavernMapImpl implements CavernMap {
 
-    private Map<Long, CavernNode> nodes = new HashMap<>();
-    private List<Connection> connections = new ArrayList<>();
+    private final Map<Long, CavernNode> nodes = new HashMap<>();
+    private final List<Connection> connections = new ArrayList<>();
 
     @Override
     public void addNode(CavernNode node) {
@@ -42,12 +43,12 @@ public class CavernMapImpl implements CavernMap {
     }
 
     @Override
-    public int getConnectedNodesWeight(CavernNode start, CavernNode end) {
+    public Integer getConnectedNodesWeight(CavernNode start, CavernNode end) {
         return connections.stream()
                 .filter(n -> n.getConnectedNodes().contains(start) && n.getConnectedNodes().contains(end))
                 .findFirst()
-                .map(n -> n.getWeight())
-                .get();
+                .map(Connection::getWeight)
+                .orElse(null);
     }
 
     @Override

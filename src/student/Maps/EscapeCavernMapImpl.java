@@ -8,9 +8,10 @@ import java.util.Map;
 /**
  * Created by Alexander Worton on 13/02/2017.
  */
+@SuppressWarnings("ALL")
 public class EscapeCavernMapImpl extends CavernMapImpl implements EscapeCavernMap {
 
-    private Map<CavernNode, Integer> goldMap;
+    private final Map<CavernNode, Integer> goldMap;
     private CavernNode exit;
 
     {

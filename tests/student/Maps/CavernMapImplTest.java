@@ -11,9 +11,10 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Alexander Worton on 05/02/2017.
  */
+@SuppressWarnings("ALL")
 public class CavernMapImplTest {
 
-    CavernMap map;
+    private CavernMap map;
 
     @Before
     public void before(){
@@ -21,7 +22,7 @@ public class CavernMapImplTest {
     }
 
     @Test
-    public void addSingleNode() throws Exception {
+    public void addSingleNode(){
         long nodeId = 14L;
         CavernNode node = addNodeWithIdToMap(map, nodeId);
         node.setPathValue(54265);
@@ -31,7 +32,7 @@ public class CavernMapImplTest {
     }
 
     @Test
-    public void addTwoConnectedNodesForwardLinked() throws Exception {
+    public void addTwoConnectedNodesForwardLinked(){
         CavernNode node5 = addNodeWithIdToMap(map, 5);
         CavernNode node8 = addNodeWithIdToMap(map, 8);
         CavernNode node12 = addNodeWithIdToMap(map, 12);
@@ -41,7 +42,7 @@ public class CavernMapImplTest {
     }
 
     @Test
-    public void addTwoConnectedNodesReverseLinked() throws Exception {
+    public void addTwoConnectedNodesReverseLinked(){
         CavernNode node5 = addNodeWithIdToMap(map, 5);
         CavernNode node8 = addNodeWithIdToMap(map, 8);
         CavernNode node12 = addNodeWithIdToMap(map, 12);
@@ -61,8 +62,8 @@ public class CavernMapImplTest {
         map.connectNodes(node20, node21);
         map.connectNodes(node21, node22, expected21to22);
 
-        assertEquals(expected20to21, map.getConnectedNodesWeight(node21, node20));
-        assertEquals(expected21to22, map.getConnectedNodesWeight(node22, node21));
+        assertEquals(expected20to21, (int)map.getConnectedNodesWeight(node21, node20));
+        assertEquals(expected21to22, (int)map.getConnectedNodesWeight(node22, node21));
     }
 
     private CavernNode addNodeWithIdToMap(CavernMap map, long id){
