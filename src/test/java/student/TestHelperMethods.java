@@ -1,9 +1,9 @@
 package student;
 
 import game.NodeStatus;
-import student.Maps.CavernMap;
-import student.Nodes.CavernNode;
-import student.Nodes.CavernNodeImpl;
+import student.maps.CavernMap;
+import student.nodes.CavernNode;
+import student.nodes.CavernNodeImpl;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,5 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -10,4 +13,27 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.12'
+}
+
+pmd {
+    ruleSets = [
+            "java-basic",
+            "java-braces",
+            "java-android",
+            "java-clone",
+            "java-finalizers",
+            "java-imports",
+            "java-j2ee",
+            "java-javabeans",
+            "java-logging-jakarta-commons",
+            "java-migrating",
+            "java-optimizations",
+            "java-strings",
+            "java-sunsecure",
+            "java-typeresolution"
+    ]
+}
+
+checkstyle {
+    toolVersion = "7.6"
 }

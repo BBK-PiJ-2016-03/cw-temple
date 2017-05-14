@@ -1,21 +1,25 @@
 package student;
 
+import static student.maps.MapImport.convertVerticesToMap;
+
 import game.EscapeState;
 import game.ExplorationState;
 import game.Node;
-import student.Maps.CavernMap;
-import student.Maps.CavernMapImpl;
-import student.Maps.EscapeCavernMap;
-import student.Maps.EscapeCavernMapImpl;
-import student.Navigators.*;
-import student.Nodes.CavernNodeImpl;
-import student.Nodes.NodeLibrary;
-import student.Nodes.NodeNeighbourNode;
-import student.Nodes.NodeStatusNeighbourNode;
-
 import java.util.List;
+import student.maps.CavernMap;
+import student.maps.CavernMapImpl;
+import student.maps.EscapeCavernMap;
+import student.maps.EscapeCavernMapImpl;
+import student.navigators.DijkstraNavigator;
+import student.navigators.GoldSeeker;
+import student.navigators.Navigator;
+import student.navigators.Seeker;
+import student.navigators.TargetSeeker;
+import student.nodes.CavernNodeImpl;
+import student.nodes.NodeLibrary;
+import student.nodes.NodeNeighbourNode;
+import student.nodes.NodeStatusNeighbourNode;
 
-import static student.Maps.MapImport.convertVerticesToMap;
 
 public class Explorer {
 
@@ -26,25 +30,25 @@ public class Explorer {
    * than returning, it will not count.
    * If you return from this function while not standing on top of the orb,
    * it will count as a failure.
-   * <p>
-   * There is no limit to how many steps you can take, but you will receive
+   *
+   * <p>There is no limit to how many steps you can take, but you will receive
    * a score bonus multiplier for finding the orb in fewer steps.
-   * <p>
-   * At every step, you only know your current tile's ID and the ID of all
+   *
+   * <p>At every step, you only know your current tile's ID and the ID of all
    * open neighbor tiles, as well as the distance to the orb at each of these tiles
    * (ignoring walls and obstacles).
-   * <p>
-   * To get information about the current state, use functions
+   *
+   * <p>To get information about the current state, use functions
    * getCurrentLocation(),
    * getNeighbours(), and
    * getDistanceToTarget()
    * in ExplorationState.
    * You know you are standing on the orb when getDistanceToTarget() is 0.
-   * <p>
-   * Use function moveTo(long id) in ExplorationState to move to a neighboring
+   *
+   * <p>Use function moveTo(long id) in ExplorationState to move to a neighboring
    * tile by its ID. Doing this will change state to reflect your new position.
-   * <p>
-   * A suggested first implementation that will always find the orb, but likely won't
+   *
+   * <p>A suggested first implementation that will always find the orb, but likely won't
    * receive a large bonus multiplier, is a depth-first search.
    *
    * @param state the information available at the current state
@@ -60,12 +64,13 @@ public class Explorer {
     map.addNode(new CavernNodeImpl(state.getCurrentLocation(), state.getDistanceToTarget()));
     map.getNode(state.getCurrentLocation()).setVisited(true);
 
-    while(state.getDistanceToTarget() > 0){
-        //convert neighbours
-        List<NodeStatusNeighbourNode> neighbours = NodeLibrary.wrapGameNodeStatusCollection(state.getNeighbours());
+    while (state.getDistanceToTarget() > 0) {
+      //convert neighbours
+      List<NodeStatusNeighbourNode> neighbours =
+                                  NodeLibrary.wrapGameNodeStatusCollection(state.getNeighbours());
 
-        long move = seeker.getNextMove(state.getCurrentLocation(), neighbours);
-        state.moveTo(move);
+      long move = seeker.getNextMove(state.getCurrentLocation(), neighbours);
+      state.moveTo(move);
     }
   }
 
@@ -73,47 +78,53 @@ public class Explorer {
    * Escape from the cavern before the ceiling collapses, trying to collect as much
    * gold as possible along the way. Your solution must ALWAYS escape before time runs
    * out, and this should be prioritized above collecting gold.
-   * <p>
-   * You now have access to the entire underlying graph, which can be accessed through EscapeState.
-   * getCurrentNode() and getExit() will return you Node objects of interest, and getVertices()
-   * will return a collection of all nodes on the graph.
-   * <p>
-   * Note that time is measured entirely in the number of steps taken, and for each step
+   *
+   * <p>You now have access to the entire underlying graph, which can be accessed through
+   * EscapeState. getCurrentNode() and getExit() will return you Node objects of interest, and
+   * getVertices() will return a collection of all nodes on the graph.
+   *
+   * <p>Note that time is measured entirely in the number of steps taken, and for each step
    * the time remaining is decremented by the weight of the edge taken. You can use
    * getTimeRemaining() to get the time still remaining, pickUpGold() to pick up any gold
    * on your current tile (this will fail if no such gold exists), and moveTo() to move
    * to a destination node adjacent to your current node.
-   * <p>
-   * You must return from this function while standing at the exit. Failing to do so before time
+   *
+   * <p>You must return from this function while standing at the exit. Failing to do so before time
    * runs out or returning from the wrong location will be considered a failed run.
-   * <p>
-   * You will always have enough time to escape using the shortest path from the starting
+   *
+   * <p>You will always have enough time to escape using the shortest path from the starting
    * position to the exit, although this will not collect much gold.
    *
    * @param state the information available at the current state
    */
   public void escape(EscapeState state) {
     //TODO: Escape from the cavern before time runs out
-      EscapeCavernMap map = new EscapeCavernMapImpl();
-      Navigator navigator = new DijkstraNavigator(map);
-      GoldSeeker seeker = new GoldSeeker(navigator, map);
-      convertVerticesToMap(state.getVertices(), map);
+    EscapeCavernMap map = new EscapeCavernMapImpl();
+    Navigator navigator = new DijkstraNavigator(map);
+    GoldSeeker seeker = new GoldSeeker(navigator, map);
+    convertVerticesToMap(state.getVertices(), map);
 
-      map.setExit(map.getNode(state.getExit().getId()));
+    map.setExit(map.getNode(state.getExit().getId()));
 
-      int noGold = 0;
-      while(state.getCurrentNode() != state.getExit()){
-          if(state.getCurrentNode().getTile().getGold() > noGold) {
-              state.pickUpGold();
-              map.setNodeGold(map.getNode(state.getCurrentNode().getId()), noGold);
-          }
-
-          //convert neighbours
-          List<NodeNeighbourNode> neighbours = NodeLibrary.wrapGameNodeCollection(state.getCurrentNode().getNeighbours());
-
-          long move = seeker.getNextMove(state.getCurrentNode().getId(), neighbours, state.getTimeRemaining());
-          Node dest = state.getVertices().stream().filter(n -> n.getId() == move).findFirst().orElse(null);
-          state.moveTo(dest);
+    int noGold = 0;
+    while (state.getCurrentNode() != state.getExit()) {
+      if (state.getCurrentNode().getTile().getGold() > noGold) {
+        state.pickUpGold();
+        map.setNodeGold(map.getNode(state.getCurrentNode().getId()), noGold);
       }
+
+      //convert neighbours
+      List<NodeNeighbourNode> neighbours =
+                      NodeLibrary.wrapGameNodeCollection(state.getCurrentNode().getNeighbours());
+
+      long move = seeker.getNextMove(state.getCurrentNode().getId(),
+                                      neighbours,
+                                      state.getTimeRemaining());
+      Node dest = state.getVertices().stream()
+              .filter(n -> n.getId() == move)
+              .findFirst()
+              .orElse(null);
+      state.moveTo(dest);
+    }
   }
 }
